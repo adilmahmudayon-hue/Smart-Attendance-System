@@ -1,0 +1,10 @@
+# Compiled C programs
+*.exe
+*.out
+*.o
+
+# VS Code
+.vscode/
+
+# Temporary files
+tempCodeRunnerFile.c

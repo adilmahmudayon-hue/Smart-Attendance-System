@@ -1,0 +1,63 @@
+Md. Imam Ibnul,61,1,1,100.00%
+Md Mahbub Islam,62,1,3,33.33%
+KHONDOKER SHAHID RANA SOHEL,63,2,3,66.67%
+Md. Imam Ibnul,64,2,3,66.67%
+Md Mahbub Islam,65,1,3,33.33%
+MST NUSRAT TAHOSIN NISHAT,66,2,3,66.67%
+Sheikh Rahatul Islam,67,1,3,33.33%
+Md. Maksudur Rahman,68,2,3,66.67%
+Nafis Ahmed(Rakib),69,2,3,66.67%
+Juthi Das Tina,70,1,3,33.33%
+Mehrab Hossain,71,2,3,66.67%
+MD. Niamul Hassan,72,1,3,33.33%
+MD. SIAM AHMMED,73,2,3,66.67%
+Mahir Tajwar,74,1,3,33.33%
+Jubayer Ahmed,75,2,3,66.67%
+Md.Sakibul Hasan Toushin,76,2,3,66.67%
+Imran Ahmed,77,2,3,66.67%
+Sharker Anika Mahzabeen Othoi,78,1,3,33.33%
+Kazi Sharah Mehenaz Meghi,79,1,3,33.33%
+Md. Abrar Ur Rashid Jawar,80,2,3,66.67%
+Zawad Ibrahim,81,1,3,33.33%
+Sarani Saha Sheta,82,2,3,66.67%
+Rubiya Rahman Mela,83,1,3,33.33%
+MD Naimul Islam Niloy,84,2,3,66.67%
+Fariha Jannat Fiha,85,2,3,66.67%
+Muhammad Tahmid Ahnaf,86,2,3,66.67%
+Joydeep Chowdhury,87,1,3,33.33%
+Maruf Rahman,88,2,3,66.67%
+Maliha Fairoz,89,1,3,33.33%
+Mahbub Hasan Shanto,90,2,3,66.67%
+Mitaly Farzana,91,2,3,66.67%
+MD. Nafis Hasan Pranto,92,2,3,66.67%
+Muhtadi Yashar,93,2,3,66.67%
+Tahsin Hossain Chowdhury,94,3,3,100.00%
+Md. Robius Suny Refat,95,2,3,66.67%
+Rahib Abid,96,2,3,66.67%
+Antora Ghosh,97,2,3,66.67%
+Iftekharun Kabir Chowdhury Nice,98,2,3,66.67%
+Mithila Chowdhury Ritu,99,2,3,66.67%
+S.M. TANZIM SIDDIQUE,100,1,3,33.33%
+Arian Ahasan,101,3,5,60.00%
+Arijit Das,102,4,5,80.00%
+Adil Mahmud Ayon,103,2,5,40.00%
+Nishat Tasneem,104,4,5,80.00%
+Jafrin Rahman Oishe,105,4,5,80.00%
+Md Abdullah All Noman Nazir,106,2,3,66.67%
+Istamma Hossain Barka,107,2,3,66.67%
+Jeba Tasnim Raina,108,1,3,33.33%
+Mostafijur Rahman,109,2,3,66.67%
+Orna Alam,110,2,3,66.67%
+Anirban Sarkar Durjoy,111,1,3,33.33%
+Nur Muhammad Apon,112,1,3,33.33%
+Aniruddho Biswas,113,1,3,33.33%
+Udita Sen,114,1,3,33.33%
+ISMAIL HOSSAIN,115,1,3,33.33%
+Swapnil Adhikary,116,1,3,33.33%
+Sabik Ahmed Saad,117,1,3,33.33%
+MD.Salaudden Kader,118,2,3,66.67%
+Progga Banarjee,119,2,3,66.67%
+MD. RUBAYET RANA MAHFUJ,120,2,3,66.67%
+Kawser Mahmud,121,2,3,66.67%
+anannya,123,1,3,33.33%
+aewawefawe,500,2,3,66.67%
