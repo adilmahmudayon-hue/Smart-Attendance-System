@@ -55,7 +55,8 @@ Exit
 This project was developed by:
 
 | Contributor          | GitHub                                                       |
-| -------------------- | ------------------------------------------------------------ |
-| **Adil Mahmud Ayon** | [@adilmahmudayon-hue](https://github.com/adilmahmudayon-hue) |
-| **Agantor Aghosh**   | [@agantoraghosh-prog](https://github.com/agantoraghosh-prog) |
-| **Mitaly Oyshe**     | [@mitalyoyshe](https://github.com/mitalyoyshe)               |
+
+| Adil Mahmud Ayon | [@adilmahmudayon-hue](https://github.com/adilmahmudayon-hue) |
+| Agantor Aghosh   | [@agantoraghosh-prog](https://github.com/agantoraghosh-prog) |
+| Mitaly Oyshe    | [@mitalyoyshe](https://github.com/mitalyoyshe)               |
+
