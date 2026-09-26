@@ -10,3 +10,12 @@ git add .
 git commit -m "Add contributors section to README"
 5. Push to GitHub
 git push origin main
+
+Pull latest changes (if already cloned)
+
+bash
+
+// to do git pull
+Copy
+git checkout main
+git pull origin main

@@ -3,7 +3,8 @@ Md Mahbub Islam,62,1,3,33.33%
 KHONDOKER SHAHID RANA SOHEL,63,2,3,66.67%
 Md. Imam Ibnul,64,2,3,66.67%
 Md Mahbub Islam,65,1,3,33.33%
-MST NUSRAT TAHOSIN NISHAT,66,2,3,66.67%
+MST NUSRAT
+TAHOSIN NISHAT,66,2,3,66.67%
 Sheikh Rahatul Islam,67,1,3,33.33%
 Md. Maksudur Rahman,68,2,3,66.67%
 Nafis Ahmed(Rakib),69,2,3,66.67%

@@ -1,19 +1,30 @@
 #include <stdio.h>
+#include "record.h"
+
+/*
+    Reads and displays attendance information
+    from data/attendance.txt.
+
+    File format:
+    Name,Roll,Present,TotalClasses,Percentage%
+*/
+
+/* =========================================
+   TEACHER RECORD
+   ========================================= */
 
 void record(void)
 {
     FILE *fp;
-
-    char name[100];
-
-    int roll;
-    int present;
-    int totalClasses;
+    char line[500];
 
     int searchRoll;
-
     int found = 0;
 
+    char name[100];
+    int roll;
+    int presentCount;
+    int totalClasses;
     float percentage;
 
     const float ATTENDANCE_THRESHOLD = 75.0;
@@ -22,73 +33,68 @@ void record(void)
     printf("              RECORDS\n");
     printf("========================================\n");
 
-    printf("\nEnter student roll: ");
-
+    printf("Enter student roll: ");
     scanf("%d", &searchRoll);
 
     fp = fopen("../data/attendance.txt", "r");
 
     if (fp == NULL)
     {
-        printf("\nError: Cannot open attendance.txt\n");
-
+        printf("\nNo attendance records found.\n");
         return;
     }
 
-    while (fscanf(fp,
-                  "%99[^,],%d,%d,%d,%*f%%",
-                  name,
-                  &roll,
-                  &present,
-                  &totalClasses) == 4)
+    while (fgets(line, sizeof(line), fp) != NULL)
     {
-        if (roll == searchRoll)
+        /*
+            Expected format:
+            Name,Roll,Present,TotalClasses,Percentage%
+        */
+
+        if (sscanf(line,
+                   "%99[^,],%d,%d,%d,%f%%",
+                   name,
+                   &roll,
+                   &presentCount,
+                   &totalClasses,
+                   &percentage) == 5)
         {
-            if (totalClasses > 0)
+            if (roll == searchRoll)
             {
-                percentage =
-                    ((float)present /
-                     totalClasses) *
-                    100;
-            }
-            else
-            {
-                percentage = 0;
-            }
+                printf("\n========================================\n");
+                printf("          STUDENT ATTENDANCE\n");
+                printf("========================================\n");
 
-            printf("\n========================================\n");
-            printf("          STUDENT ATTENDANCE\n");
-            printf("========================================\n");
+                printf("\nStudent Name  : %s\n", name);
+                printf("Roll Number   : %d\n", roll);
+                printf("Present       : %d\n", presentCount);
+                printf("Total Classes : %d\n", totalClasses);
+                printf("Attendance    : %.2f%%\n", percentage);
 
-            printf("\nName             : %s\n", name);
-            printf("Roll Number      : %d\n", roll);
-            printf("Days Present     : %d\n", present);
-            printf("Total Classes    : %d\n", totalClasses);
-            printf("Attendance       : %.2f%%\n", percentage);
+                printf("========================================\n");
 
-            printf("========================================\n");
+                if (percentage < 60.0)
+                {
+                    printf("\nAttendance is very low.\n");
+                    printf("Please contact your course teacher.\n");
+                }
+                else if (percentage < 70.0)
+                {
+                    printf("\nPlease attend your classes regularly.\n");
+                }
+                else if (percentage < ATTENDANCE_THRESHOLD)
+                {
+                    printf("\nWarning: Attendance below %.0f%%!\n",
+                           ATTENDANCE_THRESHOLD);
+                }
+                else
+                {
+                    printf("\nAttendance status: Good standing.\n");
+                }
 
-            if (percentage < 60.0)
-            {
-                printf("\nYour attendance is low. Contact your course teacher.\n");
+                found = 1;
+                break;
             }
-            else if (percentage < 70.0)
-            {
-                printf("\nBe attentive to your classes and attend your class regularly.\n");
-            }
-            else if (percentage < ATTENDANCE_THRESHOLD)
-            {
-                printf("\n\xE2\x9A\xA0 Warning: Attendance below %.0f%%!\n",
-                       ATTENDANCE_THRESHOLD);
-            }
-            else
-            {
-                printf("\nAttendance status: Good standing.\n");
-            }
-
-            found = 1;
-
-            break;
         }
     }
 
@@ -96,12 +102,80 @@ void record(void)
 
     if (!found)
     {
-        printf("\nStudent with roll %d not found.\n", searchRoll);
+        printf("\nNo record found for roll %d.\n", searchRoll);
     }
 }
 
-int main(void)
+
+/* =========================================
+   STUDENT OWN RECORD
+   ========================================= */
+
+void studentRecord(int loggedInRoll)
 {
-    record();
-    return 0;
+    FILE *fp;
+    char line[500];
+
+    char name[100];
+    int roll;
+    int presentCount;
+    int totalClasses;
+    float percentage;
+
+    int found = 0;
+
+    fp = fopen("../data/attendance.txt", "r");
+
+    if (fp == NULL)
+    {
+        printf("\nNo attendance records found yet.\n");
+        return;
+    }
+
+    while (fgets(line, sizeof(line), fp) != NULL)
+    {
+        /*
+            Expected format:
+            Name,Roll,Present,TotalClasses,Percentage%
+        */
+
+        if (sscanf(line,
+                   "%99[^,],%d,%d,%d,%f%%",
+                   name,
+                   &roll,
+                   &presentCount,
+                   &totalClasses,
+                   &percentage) == 5)
+        {
+            /*
+                Only display the attendance belonging
+                to the currently logged-in student.
+            */
+
+            if (roll == loggedInRoll)
+            {
+                printf("\n========================================\n");
+                printf("        MY ATTENDANCE RECORD\n");
+                printf("========================================\n");
+
+                printf("\nStudent Name  : %s\n", name);
+                printf("Roll Number   : %d\n", roll);
+                printf("Present       : %d\n", presentCount);
+                printf("Total Classes : %d\n", totalClasses);
+                printf("Attendance    : %.2f%%\n", percentage);
+
+                printf("========================================\n");
+
+                found = 1;
+                break;
+            }
+        }
+    }
+
+    fclose(fp);
+
+    if (!found)
+    {
+        printf("\nNo attendance record found for your account yet.\n");
+    }
 }
