@@ -53,6 +53,18 @@ The system currently uses text files for persistent storage.
 
 ---
 
+
+
+## 👥 Our Team
+
+
+
+### 🔗 Team Members
+
+- **Adil Mahmud Ayon** — [GitHub Profile](https://github.com/adilmahmudayon-hue)
+- **Antora Ghosh** — [GitHub Profile](https://github.com/agantoraghosh-prog)
+- **Mitaly Farzana Oishe** — [GitHub Profile](https://github.com/mitalyoyshe)
+
 ## 🏗️ Project Structure
 
 ```text
