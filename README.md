@@ -1,63 +1,81 @@
-# Smart-Attendance-System
-A menu-driven Smart Attendance System developed in C for CSE structured programming lab project
+# 📚 Smart Attendance System
 
+A **C-based console application** designed to simplify student attendance management for teachers and students.
 
+The system provides separate access for **teachers and students**, allowing teachers to register students, take attendance, and view attendance records, while students can securely log in and view their own attendance information.
 
+---
 
+## 🎯 Project Overview
 
-## Workflow
+Managing attendance manually can be time-consuming and can make it difficult to maintain accurate records.
 
-The Smart Attendance System follows a simple menu-driven workflow:
+The **Smart Attendance System** provides a simple digital solution where attendance information is stored in files and managed through a structured C program.
 
-1. **New Registration**
-   - Enter the student's name, roll number, department, session, and email.
-   - The student's information is stored in `data/student-new.txt`.
+The project is being developed with a modular approach so that individual features can be maintained and expanded independently.
 
-2. **Present Call**
-   - The system loads all registered students.
-   - The teacher/instructor marks each student as **Present (P)** or **Absent (A)**.
-   - The system updates the total classes, present count, and attendance percentage.
-   - Attendance records are stored in `data/attendance.txt`.
+---
 
-3. **Records**
-   - Enter a student's roll number.
-   - The system searches the attendance records.
-   - The student's name, roll number, days present, total classes, and attendance percentage are displayed.
+## ✨ Current Features
 
-4. **Exit**
-   - The system safely exits the program.
+### 👨‍🏫 Teacher Module
 
-### Overall Flow
+Teachers can:
+
+- 🔐 Log in using teacher credentials
+- 📝 Register new students
+- ✅ Take attendance
+- 📊 View individual student attendance records
+- 📈 Calculate attendance percentages
+- ⚠️ Receive attendance-status messages based on attendance percentage
+
+### 👨‍🎓 Student Module
+
+Students can:
+
+- 🔐 Log in using their registered credentials
+- 📊 View their own attendance record
+- 📈 Check:
+  - Classes attended
+  - Total classes
+  - Attendance percentage
+
+### 💾 Data Management
+
+The system currently uses text files for persistent storage.
+
+| File | Purpose |
+|---|---|
+| `student-new.txt` | Stores registered student information |
+| `attendance.txt` | Stores attendance records |
+| `logininputs.txt` | Stores login-related input data |
+| `command.txt` | Stores project-related command/input information |
+
+---
+
+## 🏗️ Project Structure
 
 ```text
-Start
-  ↓
-Main Menu
-  ↓
-┌───────────────────────┐
-│ 1. New Registration   │
-│ 2. Present Call       │
-│ 3. Records            │
-│ 4. Exit               │
-└───────────────────────┘
-  ↓
-Registration → Store Student Information
-  ↓
-Present Call → Mark P/A → Update Attendance
-  ↓
-Records → Search by Roll → Display Attendance
-  ↓
-Exit
-
-
-## 👥 Contributors
-
-This project was developed by:
-
-| Contributor          | GitHub                                                       |
-| -------------------- | ------------------------------------------------------------ |
-| **Adil Mahmud Ayon** | [@adilmahmudayon-hue](https://github.com/adilmahmudayon-hue) |
-| **Antora Ghosh**     | [@agantoraghosh-prog](https://github.com/agantoraghosh-prog) |
-| **Mitaly Oyshe**     | [@mitalyoyshe](https://github.com/mitalyoyshe)               |
-
-
+Smart-Attendance-System/
+│
+├── data/
+│   ├── attendance.txt
+│   ├── command.txt
+│   ├── logininputs.txt
+│   └── student-new.txt
+│
+├── features/
+│   ├── present.c
+│   ├── RECORD.c
+│   ├── record.h
+│   └── REGISTRATION.c
+│
+├── src/
+│   ├── main.c
+│   └── previous/
+│       ├── premain.c
+│       └── prerecord.c
+│
+├── .gitignore
+├── LICENSE
+└── README.md
