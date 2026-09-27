@@ -1,70 +1,102 @@
 #include <stdio.h>
+#include "present.h"
 
 #define MAX_STUDENTS 100
 
-struct Student {
-    char name[100];
-    int roll;
-    int presentCount;
-    int totalClasses;
-};
-
-int main(void) {
+void present(void)
+{
     FILE *studentFile;
     FILE *attendanceFile;
 
-    struct Student students[MAX_STUDENTS];
+    char line[500];
 
-    char line[300];
-    char oldName[100];
-    char choice;
+    char name[MAX_STUDENTS][100];
+    int roll[MAX_STUDENTS];
+    int presentCount[MAX_STUDENTS];
+    int totalClasses[MAX_STUDENTS];
 
-    int count = 0;
-    int oldRoll;
-    int oldPresentCount;
-    int oldTotalClasses;
-    float oldPercentage;
+    int studentCount = 0;
+    int i;
+    char status;
 
-    /* Open student list */
-    studentFile = fopen("student.txt", "r");
+    /* =========================================
+       OPEN STUDENT REGISTRATION FILE
+       ========================================= */
 
-    if (studentFile == NULL) {
-        printf("Could not open student.txt\n");
-        return 1;
+    studentFile = fopen("../data/student-new.txt", "r");
+
+    if (studentFile == NULL)
+    {
+        printf("\nNo student registration file found.\n");
+        return;
     }
 
-    /* Read only name and roll from student.txt */
+    /* =========================================
+       READ STUDENTS
+       Format:
+       Name,Roll,Department,Session,Email,Password
+       ========================================= */
+
     while (fgets(line, sizeof(line), studentFile) != NULL &&
-           count < MAX_STUDENTS) {
-
-        if (sscanf(line, "%99[^,],%d",
-                   students[count].name,
-                   &students[count].roll) == 2) {
-
-            students[count].presentCount = 0;
-            students[count].totalClasses = 0;
-            count++;
+           studentCount < MAX_STUDENTS)
+    {
+        if (sscanf(line,
+                   "%99[^,],%d",
+                   name[studentCount],
+                   &roll[studentCount]) == 2)
+        {
+            studentCount++;
         }
     }
 
     fclose(studentFile);
 
-    /* Read old attendance records */
-    attendanceFile = fopen("attendance.txt", "r");
+    if (studentCount == 0)
+    {
+        printf("\nNo students are registered.\n");
+        return;
+    }
 
-    if (attendanceFile != NULL) {
-        while (fscanf(attendanceFile, "%99[^,],%d,%d,%d,%f%%",
-                      oldName,
-                      &oldRoll,
-                      &oldPresentCount,
-                      &oldTotalClasses,
-                      &oldPercentage) == 5) {
+    /* =========================================
+       INITIALIZE ATTENDANCE ARRAYS
+       ========================================= */
 
-            for (int i = 0; i < count; i++) {
-                if (students[i].roll == oldRoll) {
-                    students[i].presentCount = oldPresentCount;
-                    students[i].totalClasses = oldTotalClasses;
-                    break;
+    for (i = 0; i < studentCount; i++)
+    {
+        presentCount[i] = 0;
+        totalClasses[i] = 0;
+    }
+
+    /* =========================================
+       READ PREVIOUS ATTENDANCE
+       ========================================= */
+
+    attendanceFile = fopen("../data/attendance.txt", "r");
+
+    if (attendanceFile != NULL)
+    {
+        while (fgets(line, sizeof(line), attendanceFile) != NULL)
+        {
+            char oldName[100];
+            int oldRoll;
+            int oldPresent;
+            int oldTotal;
+
+            if (sscanf(line,
+                       "%99[^,],%d,%d,%d",
+                       oldName,
+                       &oldRoll,
+                       &oldPresent,
+                       &oldTotal) == 4)
+            {
+                for (i = 0; i < studentCount; i++)
+                {
+                    if (roll[i] == oldRoll)
+                    {
+                        presentCount[i] = oldPresent;
+                        totalClasses[i] = oldTotal;
+                        break;
+                    }
                 }
             }
         }
@@ -72,56 +104,83 @@ int main(void) {
         fclose(attendanceFile);
     }
 
-    /* Each run means one class was held */
-    for (int i = 0; i < count; i++) {
-        students[i].totalClasses++;
+    /* =========================================
+       THIS RUN = ONE NEW CLASS
+       ========================================= */
+
+    for (i = 0; i < studentCount; i++)
+    {
+        totalClasses[i]++;
     }
 
-    /* Take attendance */
-    for (int i = 0; i < count; i++) {
-        printf("\nName: %s\n", students[i].name);
-        printf("Roll: %d\n", students[i].roll);
-        printf("Attendance (P = Present, A = Absent): ");
+    /* =========================================
+       PRESENT CALL
+       ========================================= */
 
-        scanf(" %c", &choice);
+    printf("\n========================================\n");
+    printf("              PRESENT CALL\n");
+    printf("========================================\n");
 
-        if (choice == 'P' || choice == 'p') {
-            students[i].presentCount++;
-            printf("%s marked Present.\n", students[i].name);
+    for (i = 0; i < studentCount; i++)
+    {
+        printf("\n%d. %s", i + 1, name[i]);
+        printf(" (Roll: %d)\n", roll[i]);
+
+        printf("Enter P for Present / A for Absent: ");
+        scanf(" %c", &status);
+
+        if (status == 'P' || status == 'p')
+        {
+            presentCount[i]++;
+
+            printf("%s marked Present.\n", name[i]);
         }
-        else if (choice == 'A' || choice == 'a') {
-            printf("%s marked Absent.\n", students[i].name);
+        else if (status == 'A' || status == 'a')
+        {
+            printf("%s marked Absent.\n", name[i]);
         }
-        else {
-            printf("Invalid input. Marked Absent.\n");
+        else
+        {
+            printf("Invalid input. Student marked Absent.\n");
         }
     }
 
-    /* Save full records only in attendance.txt */
-    attendanceFile = fopen("attendance.txt", "w");
+    /* =========================================
+       SAVE UPDATED ATTENDANCE
+       ========================================= */
 
-    if (attendanceFile == NULL) {
-        printf("Could not save attendance.txt\n");
-        return 1;
+    attendanceFile = fopen("../data/attendance.txt", "w");
+
+    if (attendanceFile == NULL)
+    {
+        printf("\nError: Could not open attendance file.\n");
+        return;
     }
 
-    for (int i = 0; i < count; i++) {
-        float percentage;
+    for (i = 0; i < studentCount; i++)
+    {
+        float percentage = 0.0;
 
-        percentage = (float)students[i].presentCount /
-                     students[i].totalClasses * 100;
+        if (totalClasses[i] > 0)
+        {
+            percentage =
+                ((float)presentCount[i] /
+                 totalClasses[i]) *
+                100.0;
+        }
 
-        fprintf(attendanceFile, "%s,%d,%d,%d,%.2f%%\n",
-                students[i].name,
-                students[i].roll,
-                students[i].presentCount,
-                students[i].totalClasses,
+        fprintf(attendanceFile,
+                "%s,%d,%d,%d,%.2f%%\n",
+                name[i],
+                roll[i],
+                presentCount[i],
+                totalClasses[i],
                 percentage);
     }
 
     fclose(attendanceFile);
 
-    printf("\nAttendance saved successfully in attendance.txt\n");
-
-    return 0;
+    printf("\n========================================\n");
+    printf("Attendance saved successfully!\n");
+    printf("========================================\n");
 }
