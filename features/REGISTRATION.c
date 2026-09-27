@@ -1,137 +1,158 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-
-/* Function declarations */
-void regi(void);
-void present(void);
-void record(void);
-
-int main(void)
-{
-    int choice;
-
-    while (1)
-    {
-        printf("\n\n");
-        printf("========================================\n");
-        printf("       SMART ATTENDANCE SYSTEM\n");
-        printf("========================================\n");
-
-        printf("\n1. New Registration\n");
-        printf("2. Present Call\n");
-        printf("3. Records\n");
-        printf("4. Exit\n");
-
-        printf("\nEnter Your Choice: ");
-        scanf("%d", &choice);
-
-        /* Clear input buffer */
-        while (getchar() != '\n');
-
-        switch (choice)
-        {
-            case 1:
-                regi();
-                break;
-
-            case 2:
-                present();
-                break;
-
-            case 3:
-                record();
-                break;
-
-            case 4:
-                printf("\nThank you for using Smart Attendance System!\n");
-                return 0;
-
-            default:
-                printf("\nInvalid Choice! Please enter 1-4.\n");
-        }
-    }
-
-    return 0;
-}
-
-
-/* ================= NEW REGISTRATION ================= */
+#include "registration.h"
 
 void regi(void)
 {
-    typedef struct record
-    {
-        int roll;
-        char name[100];
-        char dept[100];
-        char session[100];
-        char stu_email[100];
-    } record;
+    FILE *fp;
+    FILE *checkFile;
 
-    FILE *fp = fopen("student-new.txt", "a");
+    int roll;
+    int existingRoll;
 
-    if (fp == NULL)
+    char name[100];
+    char dept[100];
+    char session[100];
+    char stu_email[100];
+    char password[100];
+
+    char line[500];
+
+    printf("\n========================================\n");
+    printf("           NEW REGISTRATION\n");
+    printf("========================================\n");
+
+    /* ================================
+       STUDENT NAME
+       ================================ */
+
+    printf("Enter student name: ");
+
+    fgets(name, sizeof(name), stdin);
+    name[strcspn(name, "\n")] = '\0';
+
+    /* ================================
+       STUDENT ROLL
+       ================================ */
+
+    printf("Enter roll: ");
+
+    if (scanf("%d", &roll) != 1)
     {
-        printf("Error: cannot open file\n");
+        printf("\nInvalid roll number.\n");
+
+        while (getchar() != '\n');
+
         return;
     }
 
-    record student;
-
-    printf("\n========================================\n");
-    printf("          NEW REGISTRATION\n");
-    printf("========================================\n");
-
-    printf("Enter student name: ");
-    fgets(student.name, sizeof(student.name), stdin);
-    student.name[strcspn(student.name, "\n")] = '\0';
-
-    printf("Enter student's roll: ");
-    scanf("%d", &student.roll);
-
     while (getchar() != '\n');
 
-    printf("Enter student's department: ");
-    fgets(student.dept, sizeof(student.dept), stdin);
-    student.dept[strcspn(student.dept, "\n")] = '\0';
+    /* ================================
+       CHECK DUPLICATE ROLL
+       ================================ */
+
+    checkFile = fopen("../data/student-new.txt", "r");
+
+    if (checkFile != NULL)
+    {
+        while (fgets(line, sizeof(line), checkFile) != NULL)
+        {
+            if (sscanf(line,
+                       "%*99[^,],%d",
+                       &existingRoll) == 1)
+            {
+                if (existingRoll == roll)
+                {
+                    printf("\n========================================\n");
+                    printf("A student with Roll %d already exists!\n",
+                           roll);
+                    printf("========================================\n");
+
+                    fclose(checkFile);
+                    return;
+                }
+            }
+        }
+
+        fclose(checkFile);
+    }
+
+    /* ================================
+       DEPARTMENT
+       ================================ */
+
+    printf("Enter department: ");
+
+    fgets(dept, sizeof(dept), stdin);
+    dept[strcspn(dept, "\n")] = '\0';
+
+    /* ================================
+       SESSION
+       ================================ */
 
     printf("Enter session: ");
-    fgets(student.session, sizeof(student.session), stdin);
-    student.session[strcspn(student.session, "\n")] = '\0';
 
-    printf("Enter student's e-mail: ");
-    fgets(student.stu_email, sizeof(student.stu_email), stdin);
-    student.stu_email[strcspn(student.stu_email, "\n")] = '\0';
+    fgets(session, sizeof(session), stdin);
+    session[strcspn(session, "\n")] = '\0';
 
-    fprintf(fp, "%s,%d,%s,%s,%s\n",
-            student.name,
-            student.roll,
-            student.dept,
-            student.session,
-            student.stu_email);
+    /* ================================
+       EMAIL
+       ================================ */
+
+    printf("Enter student email: ");
+
+    fgets(stu_email, sizeof(stu_email), stdin);
+    stu_email[strcspn(stu_email, "\n")] = '\0';
+
+    /* ================================
+       PASSWORD
+       ================================ */
+
+    printf("Create student password: ");
+
+    fgets(password, sizeof(password), stdin);
+    password[strcspn(password, "\n")] = '\0';
+
+    /* ================================
+       SAVE STUDENT
+       ================================ */
+
+    fp = fopen("../data/student-new.txt", "a");
+
+    if (fp == NULL)
+    {
+        printf("\nError: Could not open student file.\n");
+        return;
+    }
+
+    fprintf(fp,
+            "%s,%d,%s,%s,%s,%s\n",
+            name,
+            roll,
+            dept,
+            session,
+            stu_email,
+            password);
 
     fclose(fp);
 
-    printf("\nStudent information saved successfully!\n");
-}
+    /* ================================
+       SUCCESS MESSAGE
+       ================================ */
 
+    printf("\n========================================\n");
+    printf("Student registered successfully!\n");
+    printf("========================================\n");
 
-/* ================= PRESENT CALL ================= */
+    printf("Student Name  : %s\n", name);
+    printf("Student Roll  : %d\n", roll);
+    printf("Department    : %s\n", dept);
+    printf("Session       : %s\n", session);
+    printf("Email         : %s\n", stu_email);
 
-void present(void)
-{
-    printf("\nPresent Call selected.\n");
+    printf("\nStudent can now login using:\n");
+    printf("Roll + Password\n");
 
-    /* We will add your attendance code here later */
-}
-
-
-/* ================= RECORDS ================= */
-
-void record(void)
-{
-    printf("\nRecords selected.\n");
-
-    /* We will add your records code here later */
+    printf("========================================\n");
 }

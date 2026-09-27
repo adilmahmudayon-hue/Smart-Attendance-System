@@ -5,6 +5,7 @@
 
 #include "../features/record.h"
 #include "../features/present.h"
+#include "../features/registration.h"
 
 #define TEACHER_ID "T001"
 #define TEACHER_PASSWORD "teacher123"
@@ -15,7 +16,7 @@ void login(void);
 void teacherMenu(void);
 void studentMenu(int studentRoll);
 
-void regi(void);
+
 
 
 int studentLogin(int *loggedInRoll);
@@ -299,100 +300,5 @@ int studentLogin(int *loggedInRoll)
 }
 
 
-/* =========================================
-   NEW REGISTRATION
-   ========================================= */
-
-void regi(void)
-{
-    FILE *fp;
-    FILE *checkFile;
-
-    int roll;
-    int existingRoll;
-
-    char name[100];
-    char dept[100];
-    char session[100];
-    char stu_email[100];
-    char password[100];
-
-    char line[500];
-
-    printf("\n========================================\n");
-    printf("          NEW REGISTRATION\n");
-    printf("========================================\n");
-
-    printf("Enter student name: ");
-    fgets(name, sizeof(name), stdin);
-    name[strcspn(name, "\n")] = '\0';
-
-    printf("Enter roll: ");
-    scanf("%d", &roll);
-    getchar();
-
-    checkFile = fopen("data/student-new.txt", "r");
-
-    if (checkFile != NULL)
-    {
-        while (fgets(line, sizeof(line), checkFile) != NULL)
-        {
-            if (sscanf(line, "%*99[^,],%d", &existingRoll) == 1)
-            {
-                if (existingRoll == roll)
-                {
-                    printf("\nA student with Roll %d already exists!\n",
-                           roll);
-
-                    fclose(checkFile);
-                    return;
-                }
-            }
-        }
-
-        fclose(checkFile);
-    }
-
-    printf("Enter department: ");
-    fgets(dept, sizeof(dept), stdin);
-    dept[strcspn(dept, "\n")] = '\0';
-
-    printf("Enter session: ");
-    fgets(session, sizeof(session), stdin);
-    session[strcspn(session, "\n")] = '\0';
-
-    printf("Enter student email: ");
-    fgets(stu_email, sizeof(stu_email), stdin);
-    stu_email[strcspn(stu_email, "\n")] = '\0';
-
-    printf("Create student password: ");
-    fgets(password, sizeof(password), stdin);
-    password[strcspn(password, "\n")] = '\0';
-
-    fp = fopen("data/student-new.txt", "a");
-
-    if (fp == NULL)
-    {
-        printf("\nError: Could not open student file.\n");
-        return;
-    }
-
-    fprintf(fp,
-            "%s,%d,%s,%s,%s,%s\n",
-            name,
-            roll,
-            dept,
-            session,
-            stu_email,
-            password);
-
-    fclose(fp);
-
-    printf("\n========================================\n");
-    printf("Student registered successfully!\n");
-    printf("Student Roll: %d\n", roll);
-    printf("Student can now login using this roll and password.\n");
-    printf("========================================\n");
-}
 
 
