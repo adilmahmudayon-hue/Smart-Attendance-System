@@ -49,7 +49,7 @@ void regi(void)
     while (getchar() != '\n');
 
     /* ================================
-       CHECK DUPLICATE ROLL
+       DUPLICATE ROLL CHECK
        ================================ */
 
     checkFile = fopen("../data/student-new.txt", "r");
@@ -58,15 +58,18 @@ void regi(void)
     {
         while (fgets(line, sizeof(line), checkFile) != NULL)
         {
-            if (sscanf(line,
-                       "%*99[^,],%d",
-                       &existingRoll) == 1)
+            /*
+               File format:
+               name,roll,department,session,email,password
+            */
+
+            if (sscanf(line, "%*99[^,],%d", &existingRoll) == 1)
             {
                 if (existingRoll == roll)
                 {
                     printf("\n========================================\n");
-                    printf("A student with Roll %d already exists!\n",
-                           roll);
+                    printf("ERROR: Roll number %d already exists!\n", roll);
+                    printf("Registration rejected.\n");
                     printf("========================================\n");
 
                     fclose(checkFile);
