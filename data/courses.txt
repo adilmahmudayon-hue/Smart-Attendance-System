@@ -1,0 +1,5 @@
+CSE1101,Structured Programming
+CSE1102,Structured Programming Lab
+MATH1101,Differential Calculus
+PHY1101,Physics
+ENG1101,English

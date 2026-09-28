@@ -6,6 +6,7 @@
 #include "../features/record.h"
 #include "../features/present.h"
 #include "../features/registration.h"
+#include "../features/course.h"
 
 #define TEACHER_ID "T001"
 #define TEACHER_PASSWORD "teacher123"

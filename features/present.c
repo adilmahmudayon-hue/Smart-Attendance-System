@@ -1,23 +1,25 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
+
 #include "present.h"
+#include "course.h"
 
 #define MAX_STUDENTS 100
 #define NAME_LENGTH 100
 #define LINE_LENGTH 500
-
-#define ATTENDANCE_FILE "../data/attendance.txt"
-#define SESSION_FILE "../data/attendance-session.txt"
 
 static int save_attendance(
     const char name[][NAME_LENGTH],
     const int roll[],
     const int presentCount[],
     const int totalClasses[],
-    int studentCount)
+    int studentCount,
+    const char attendanceFileName[])
 {
-    FILE *file = fopen(ATTENDANCE_FILE, "w");
+    FILE *file = fopen(attendanceFileName, "w");
+
     int i;
 
     if (file == NULL)
@@ -36,28 +38,39 @@ static int save_attendance(
                 ((float)presentCount[i] / totalClasses[i]) * 100.0f;
         }
 
-        fprintf(file, "%s,%d,%d,%d,%.2f%%\n",
-                name[i], roll[i], presentCount[i],
-                totalClasses[i], percentage);
+        fprintf(file,
+                "%s,%d,%d,%d,%.2f%%\n",
+                name[i],
+                roll[i],
+                presentCount[i],
+                totalClasses[i],
+                percentage);
     }
 
     fclose(file);
+
     return 1;
 }
 
+
 /*
  * Session file format:
+ *
  * roll,status
  *
- * status is:
+ * status:
  * P = present
  * A = absent
  * U = not yet called
  */
-static int save_session(const int roll[], const char status[],
-                        int studentCount)
+static int save_session(
+    const int roll[],
+    const char status[],
+    int studentCount,
+    const char sessionFileName[])
 {
-    FILE *file = fopen(SESSION_FILE, "w");
+    FILE *file = fopen(sessionFileName, "w");
+
     int i;
 
     if (file == NULL)
@@ -68,33 +81,106 @@ static int save_session(const int roll[], const char status[],
 
     for (i = 0; i < studentCount; i++)
     {
-        fprintf(file, "%d,%c\n", roll[i], status[i]);
+        fprintf(file,
+                "%d,%c\n",
+                roll[i],
+                status[i]);
     }
 
     fclose(file);
+
     return 1;
 }
+
 
 void present(void)
 {
     FILE *studentFile;
     FILE *attendanceFile;
     FILE *sessionFile;
+
     char line[LINE_LENGTH];
 
     char name[MAX_STUDENTS][NAME_LENGTH];
+
     int roll[MAX_STUDENTS];
+
     int presentCount[MAX_STUDENTS] = {0};
     int totalClasses[MAX_STUDENTS] = {0};
+
     char status[MAX_STUDENTS];
 
     int studentCount = 0;
     int i;
+
     int hasUnfinishedSession = 0;
     int choice;
+
     char input;
 
-    studentFile = fopen("../data/student-new.txt", "r");
+    /*
+     * Course information
+     */
+    char courseCode[50];
+    char courseName[100];
+
+    char attendanceFileName[150];
+    char sessionFileName[150];
+
+
+    /*
+     * STEP 1:
+     * Select course before doing anything with attendance.
+     */
+
+    printf("\n========================================\n");
+    printf("          COURSE-WISE ATTENDANCE\n");
+    printf("========================================\n");
+
+    if (!selectCourse(courseCode, courseName))
+    {
+        printf("\nCourse selection cancelled.\n");
+        return;
+    }
+
+
+    /*
+     * Build the attendance file name.
+     *
+     * Example:
+     * CSE1101 -> ../data/CSE1101.txt
+     */
+
+   snprintf(attendanceFileName,
+         sizeof(attendanceFileName),
+         "data/%s.txt",
+         courseCode);
+
+    /*
+     * Build the session file name.
+     *
+     * Example:
+     * CSE1101 -> ../data/CSE1101-session.txt
+     */
+
+     snprintf(sessionFileName,
+         sizeof(sessionFileName),
+         "data/%s-session.txt",
+         courseCode);
+
+
+    printf("\n========================================\n");
+    printf("Course : %s\n", courseCode);
+    printf("Name   : %s\n", courseName);
+    printf("========================================\n");
+
+
+    /*
+     * STEP 2:
+     * Load registered students.
+     */
+
+    studentFile = fopen("data/student-new.txt", "r");
 
     if (studentFile == NULL)
     {
@@ -102,12 +188,20 @@ void present(void)
         return;
     }
 
-    /* Registration format: Name,Roll,Department,Session,Email,Password */
+
+    /*
+     * Registration format:
+     *
+     * Name,Roll,Department,Session,Email,Password
+     */
+
     while (fgets(line, sizeof(line), studentFile) != NULL &&
            studentCount < MAX_STUDENTS)
     {
-        if (sscanf(line, "%99[^,],%d",
-                   name[studentCount], &roll[studentCount]) == 2)
+        if (sscanf(line,
+                   "%99[^,],%d",
+                   name[studentCount],
+                   &roll[studentCount]) == 2)
         {
             studentCount++;
         }
@@ -115,31 +209,47 @@ void present(void)
 
     fclose(studentFile);
 
+
     if (studentCount == 0)
     {
         printf("\nNo students are registered.\n");
         return;
     }
 
+
+    /*
+     * Initially nobody has been called.
+     */
+
     for (i = 0; i < studentCount; i++)
     {
         status[i] = 'U';
     }
 
-    /* Load cumulative attendance. */
-    attendanceFile = fopen(ATTENDANCE_FILE, "r");
+
+    /*
+     * STEP 3:
+     * Load cumulative attendance for THIS COURSE ONLY.
+     */
+
+    attendanceFile = fopen(attendanceFileName, "r");
 
     if (attendanceFile != NULL)
     {
         while (fgets(line, sizeof(line), attendanceFile) != NULL)
         {
             char oldName[NAME_LENGTH];
+
             int oldRoll;
             int oldPresent;
             int oldTotal;
 
-            if (sscanf(line, "%99[^,],%d,%d,%d",
-                       oldName, &oldRoll, &oldPresent, &oldTotal) == 4)
+            if (sscanf(line,
+                       "%99[^,],%d,%d,%d",
+                       oldName,
+                       &oldRoll,
+                       &oldPresent,
+                       &oldTotal) == 4)
             {
                 for (i = 0; i < studentCount; i++)
                 {
@@ -147,6 +257,7 @@ void present(void)
                     {
                         presentCount[i] = oldPresent;
                         totalClasses[i] = oldTotal;
+
                         break;
                     }
                 }
@@ -156,8 +267,13 @@ void present(void)
         fclose(attendanceFile);
     }
 
-    /* Detect and load an unfinished session by matching student roll. */
-    sessionFile = fopen(SESSION_FILE, "r");
+
+    /*
+     * STEP 4:
+     * Check whether THIS COURSE has an unfinished session.
+     */
+
+    sessionFile = fopen(sessionFileName, "r");
 
     if (sessionFile != NULL)
     {
@@ -166,15 +282,20 @@ void present(void)
 
         while (fgets(line, sizeof(line), sessionFile) != NULL)
         {
-            if (sscanf(line, "%d,%c", &oldRoll, &oldStatus) == 2)
+            if (sscanf(line,
+                       "%d,%c",
+                       &oldRoll,
+                       &oldStatus) == 2)
             {
                 for (i = 0; i < studentCount; i++)
                 {
                     if (roll[i] == oldRoll &&
-                        (oldStatus == 'P' || oldStatus == 'A' ||
+                        (oldStatus == 'P' ||
+                         oldStatus == 'A' ||
                          oldStatus == 'U'))
                     {
                         status[i] = oldStatus;
+
                         break;
                     }
                 }
@@ -183,28 +304,48 @@ void present(void)
 
         fclose(sessionFile);
 
+
+        /*
+         * Check if anyone is still unmarked.
+         */
+
         for (i = 0; i < studentCount; i++)
         {
             if (status[i] == 'U')
             {
                 hasUnfinishedSession = 1;
+
                 break;
             }
         }
     }
 
+
+    /*
+     * STEP 5:
+     * Ask whether to continue unfinished attendance.
+     */
+
     if (hasUnfinishedSession)
     {
-        printf("\nAn unfinished attendance record was found.\n");
+        printf("\nAn unfinished attendance record was found for ");
+        printf("%s.\n", courseCode);
+
         printf("1. Continue the previous record\n");
         printf("2. Start a new record\n");
+
         printf("Choose an option: ");
 
         if (scanf("%d", &choice) != 1)
         {
             printf("\nInvalid choice.\n");
+
+            while (getchar() != '\n');
+
             return;
         }
+
+        while (getchar() != '\n');
 
         if (choice == 1)
         {
@@ -216,25 +357,33 @@ void present(void)
             {
                 status[i] = 'U';
             }
+
+            /*
+             * Starting a new session.
+             * Previous partial session is replaced as students are marked.
+             */
+
         }
         else
         {
             printf("\nInvalid choice. Returning to the main menu.\n");
+
             return;
         }
     }
-    else
-    {
-        for (i = 0; i < studentCount; i++)
-        {
-            status[i] = 'U';
-        }
-    }
+
+
+    /*
+     * STEP 6:
+     * Start attendance.
+     */
 
     printf("\n========================================\n");
-    printf("              PRESENT CALL\n");
+    printf("           PRESENT CALL\n");
+    printf("Course: %s\n", courseCode);
     printf("Enter S at a prompt to stop and save.\n");
     printf("========================================\n");
+
 
     for (i = 0; i < studentCount; i++)
     {
@@ -243,64 +392,130 @@ void present(void)
             continue;
         }
 
-        printf("\n%d. %s (Roll: %d)\n", i + 1, name[i], roll[i]);
+
+        printf("\n%d. %s (Roll: %d)\n",
+               i + 1,
+               name[i],
+               roll[i]);
+
         printf("Enter P for Present, A for Absent, or S to stop: ");
+
 
         if (scanf(" %c", &input) != 1)
         {
             printf("\nCould not read input. Saving and returning.\n");
-            save_session(roll, status, studentCount);
+
+            save_session(
+                roll,
+                status,
+                studentCount,
+                sessionFileName);
+
             return;
         }
+
 
         input = (char)toupper((unsigned char)input);
 
+
+        /*
+         * Stop attendance.
+         */
+
         if (input == 'S')
         {
-            save_session(roll, status, studentCount);
-            printf("\nAttendance session saved. Returning to the main menu.\n");
+            save_session(
+                roll,
+                status,
+                studentCount,
+                sessionFileName);
+
+            printf("\nAttendance session saved.\n");
+            printf("Course: %s\n", courseCode);
+            printf("Returning to the main menu.\n");
+
             return;
         }
+
+
+        /*
+         * Invalid input.
+         */
 
         if (input != 'P' && input != 'A')
         {
             printf("Invalid input. Please enter P, A, or S.\n");
+
             i--;
+
             continue;
         }
 
+
+        /*
+         * Store the attendance status.
+         */
+
         status[i] = input;
+
         totalClasses[i]++;
+
 
         if (input == 'P')
         {
             presentCount[i]++;
         }
 
+
         /*
-         * Save after each answer so a partial record is retained even if
-         * the program exits unexpectedly.
+         * Save after every answer.
+         *
+         * This protects the attendance data if the
+         * program closes unexpectedly.
          */
-        if (!save_attendance(name, roll, presentCount, totalClasses,
-                             studentCount) ||
-            !save_session(roll, status, studentCount))
+
+        if (!save_attendance(
+                name,
+                roll,
+                presentCount,
+                totalClasses,
+                studentCount,
+                attendanceFileName) ||
+
+            !save_session(
+                roll,
+                status,
+                studentCount,
+                sessionFileName))
         {
-            printf("\nCould not save. Returning to the main menu.\n");
+            printf("\nCould not save attendance.\n");
+            printf("Returning to the main menu.\n");
+
             return;
         }
 
-        printf("%s marked %s.\n", name[i],
+
+        printf("%s marked %s.\n",
+               name[i],
                input == 'P' ? "Present" : "Absent");
     }
 
-    /* All students have been called; remove the unfinished-session file. */
-    if (remove(SESSION_FILE) != 0)
+
+    /*
+     * STEP 7:
+     * All students have been called.
+     *
+     * Remove the course-specific unfinished session file.
+     */
+
+    if (remove(sessionFileName) != 0)
     {
-        printf("\nAttendance was saved, but the session file could not be "
-               "removed.\n");
+        printf("\nAttendance was saved, but the session file could not be removed.\n");
     }
+
 
     printf("\n========================================\n");
     printf("Attendance saved successfully!\n");
+    printf("Course: %s\n", courseCode);
     printf("========================================\n");
 }

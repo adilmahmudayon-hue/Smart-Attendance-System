@@ -1,0 +1,62 @@
+Md. Imam Ibnul,61,1,1,100.00%
+Md Mahbub Islam,62,0,1,0.00%
+KHONDOKER SHAHID RANA SOHEL,63,1,1,100.00%
+Md. Imam Ibnul,64,1,1,100.00%
+Md Mahbub Islam,65,1,1,100.00%
+MST NUSRAT TAHOSIN NISHAT,66,1,1,100.00%
+Sheikh Rahatul Islam,67,1,1,100.00%
+Md. Maksudur Rahman,68,1,1,100.00%
+Nafis Ahmed(Rakib),69,1,1,100.00%
+Juthi Das Tina,70,1,1,100.00%
+Mehrab Hossain,71,1,1,100.00%
+MD. Niamul Hassan,72,1,1,100.00%
+MD. SIAM AHMMED,73,1,1,100.00%
+Mahir Tajwar,74,1,1,100.00%
+Jubayer Ahmed,75,1,1,100.00%
+Md.Sakibul Hasan Toushin,76,1,1,100.00%
+Imran Ahmed,77,1,1,100.00%
+Sharker Anika Mahzabeen Othoi,78,1,1,100.00%
+Kazi Sharah Mehenaz Meghi,79,1,1,100.00%
+Md. Abrar Ur Rashid Jawar,80,0,1,0.00%
+Zawad Ibrahim,81,1,1,100.00%
+Sarani Saha Sheta,82,0,1,0.00%
+Rubiya Rahman Mela,83,0,1,0.00%
+MD Naimul Islam Niloy,84,0,1,0.00%
+Fariha Jannat Fiha,85,0,1,0.00%
+Muhammad Tahmid Ahnaf,86,0,1,0.00%
+Joydeep Chowdhury,87,1,1,100.00%
+Maruf Rahman,88,0,1,0.00%
+Maliha Fairoz,89,1,1,100.00%
+Mahbub Hasan Shanto,90,0,1,0.00%
+Mitaly Farzana,91,1,1,100.00%
+MD. Nafis Hasan Pranto,92,0,1,0.00%
+Muhtadi Yashar,93,1,1,100.00%
+Tahsin Hossain Chowdhury,94,0,1,0.00%
+Md. Robius Suny Refat,95,1,1,100.00%
+Rahib Abid,96,0,1,0.00%
+Antora Ghosh,97,1,1,100.00%
+Iftekharun Kabir Chowdhury Nice,98,0,1,0.00%
+Mithila Chowdhury Ritu,99,1,1,100.00%
+S.M. TANZIM SIDDIQUE,100,0,1,0.00%
+Arian Ahasan,101,1,1,100.00%
+Arijit Das,102,1,1,100.00%
+Adil Mahmud Ayon,103,1,1,100.00%
+Nishat Tasneem,104,1,1,100.00%
+Jafrin Rahman Oishe,105,1,1,100.00%
+Md Abdullah All Noman Nazir,106,1,1,100.00%
+Istamma Hossain Barka,107,1,1,100.00%
+Jeba Tasnim Raina,108,1,1,100.00%
+Mostafijur Rahman,109,1,1,100.00%
+Orna Alam,110,1,1,100.00%
+Anirban Sarkar Durjoy,111,1,1,100.00%
+Nur Muhammad Apon,112,1,1,100.00%
+Aniruddho Biswas,113,1,1,100.00%
+Udita Sen,114,1,1,100.00%
+ISMAIL HOSSAIN,115,1,1,100.00%
+Swapnil Adhikary,116,1,1,100.00%
+Sabik Ahmed Saad,117,1,1,100.00%
+MD.Salaudden Kader,118,1,1,100.00%
+Progga Banarjee,119,1,1,100.00%
+MD. RUBAYET RANA MAHFUJ,120,1,1,100.00%
+rup,109,1,1,100.00%
+Tahiat Tarannum Urbita,155,1,1,100.00%
