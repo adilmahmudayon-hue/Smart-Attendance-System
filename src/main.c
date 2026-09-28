@@ -150,7 +150,8 @@ void teacherMenu(void)
         printf("1. New Registration\n");
         printf("2. Present Call\n");
         printf("3. Records\n");
-        printf("4. Exit\n");
+        printf("4. Overall Class Attendance Report\n");
+        printf("5. Exit\n");
         printf("========================================\n");
         printf("Enter your choice: ");
 
@@ -171,7 +172,11 @@ void teacherMenu(void)
                 record();
                 break;
 
-            case 4:
+             case 4:
+                overallAttendanceReport();
+                break;
+
+            case 5:
                 printf("\nLogging out from teacher account...\n");
                 return;
 
