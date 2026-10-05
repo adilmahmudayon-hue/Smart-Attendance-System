@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Smart Attendance System",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/attendance.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "preLaunchTask": "Build Smart Attendance System"
+        }
+    ]
+}
