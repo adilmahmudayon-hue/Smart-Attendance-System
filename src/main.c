@@ -202,8 +202,8 @@ void teacherMenu(void)
         
         printf("1. Present Call\n");
         printf("2. Records\n");
-        printf("3. Overall Class Attendance Report\n");
-        printf("4. Exit\n");
+        
+        printf("3. Exit\n");
         printf("========================================\n");
         printf("Enter your choice: ");
 
@@ -222,10 +222,6 @@ void teacherMenu(void)
                 break;
 
             case 3:
-                overallAttendanceReport();
-                break;
-
-            case 4:
                 printf("\nLogging out from teacher account...\n");
                 return;
 
