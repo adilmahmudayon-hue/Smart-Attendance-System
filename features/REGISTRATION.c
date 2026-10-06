@@ -52,7 +52,7 @@ void regi(void)
        DUPLICATE ROLL CHECK
        ================================ */
 
-    checkFile = fopen("../data/student-new.txt", "r");
+    checkFile = fopen("data/student-new.txt", "r");
 
     if (checkFile != NULL)
     {
@@ -121,7 +121,7 @@ void regi(void)
        SAVE STUDENT
        ================================ */
 
-    fp = fopen("../data/student-new.txt", "a");
+    fp = fopen("data/student-new.txt", "a");
 
     if (fp == NULL)
     {
