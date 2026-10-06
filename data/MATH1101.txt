@@ -1,0 +1,62 @@
+Md. Imam Ibnul,61,1,1,100.00%
+Md Mahbub Islam,62,1,1,100.00%
+KHONDOKER SHAHID RANA SOHEL,63,1,1,100.00%
+Md. Imam Ibnul,64,1,1,100.00%
+Md Mahbub Islam,65,1,1,100.00%
+MST NUSRAT TAHOSIN NISHAT,66,1,1,100.00%
+Sheikh Rahatul Islam,67,1,1,100.00%
+Md. Maksudur Rahman,68,0,1,0.00%
+Nafis Ahmed(Rakib),69,0,1,0.00%
+Juthi Das Tina,70,0,1,0.00%
+Mehrab Hossain,71,0,1,0.00%
+MD. Niamul Hassan,72,1,1,100.00%
+MD. SIAM AHMMED,73,1,1,100.00%
+Mahir Tajwar,74,0,0,0.00%
+Jubayer Ahmed,75,0,0,0.00%
+Md.Sakibul Hasan Toushin,76,0,0,0.00%
+Imran Ahmed,77,0,0,0.00%
+Sharker Anika Mahzabeen Othoi,78,0,0,0.00%
+Kazi Sharah Mehenaz Meghi,79,0,0,0.00%
+Md. Abrar Ur Rashid Jawar,80,0,0,0.00%
+Zawad Ibrahim,81,0,0,0.00%
+Sarani Saha Sheta,82,0,0,0.00%
+Rubiya Rahman Mela,83,0,0,0.00%
+MD Naimul Islam Niloy,84,0,0,0.00%
+Fariha Jannat Fiha,85,0,0,0.00%
+Muhammad Tahmid Ahnaf,86,0,0,0.00%
+Joydeep Chowdhury,87,0,0,0.00%
+Maruf Rahman,88,0,0,0.00%
+Maliha Fairoz,89,0,0,0.00%
+Mahbub Hasan Shanto,90,0,0,0.00%
+Mitaly Farzana,91,0,0,0.00%
+MD. Nafis Hasan Pranto,92,0,0,0.00%
+Muhtadi Yashar,93,0,0,0.00%
+Tahsin Hossain Chowdhury,94,0,0,0.00%
+Md. Robius Suny Refat,95,0,0,0.00%
+Rahib Abid,96,0,0,0.00%
+Antora Ghosh,97,0,0,0.00%
+Iftekharun Kabir Chowdhury Nice,98,0,0,0.00%
+Mithila Chowdhury Ritu,99,0,0,0.00%
+S.M. TANZIM SIDDIQUE,100,0,0,0.00%
+Arian Ahasan,101,0,0,0.00%
+Arijit Das,102,0,0,0.00%
+Adil Mahmud Ayon,103,0,0,0.00%
+Nishat Tasneem,104,0,0,0.00%
+Jafrin Rahman Oishe,105,0,0,0.00%
+Md Abdullah All Noman Nazir,106,0,0,0.00%
+Istamma Hossain Barka,107,0,0,0.00%
+Jeba Tasnim Raina,108,0,0,0.00%
+Mostafijur Rahman,109,0,0,0.00%
+Orna Alam,110,0,0,0.00%
+Anirban Sarkar Durjoy,111,0,0,0.00%
+Nur Muhammad Apon,112,0,0,0.00%
+Aniruddho Biswas,113,0,0,0.00%
+Udita Sen,114,0,0,0.00%
+ISMAIL HOSSAIN,115,0,0,0.00%
+Swapnil Adhikary,116,0,0,0.00%
+Sabik Ahmed Saad,117,0,0,0.00%
+MD.Salaudden Kader,118,0,0,0.00%
+Progga Banarjee,119,0,0,0.00%
+MD. RUBAYET RANA MAHFUJ,120,0,0,0.00%
+rup,109,0,0,0.00%
+Tahiat Tarannum Urbita,155,0,0,0.00%

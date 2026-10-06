@@ -4,8 +4,8 @@ git status
 git add README.md
 
 Or, if you want to push all current changes in the project:
-
 git add .
+
 4. Create the commit
 git commit -m "Add contributors section to README"
 5. Push to GitHub

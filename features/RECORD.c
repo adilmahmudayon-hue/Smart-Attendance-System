@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <string.h>
 #include "record.h"
+#include "course.h"
 
 #define MAX_STUDENTS 200
 
@@ -24,22 +26,63 @@ void overallAttendanceReport(void)
     AttendanceRecord students[MAX_STUDENTS];
     AttendanceRecord temp;
 
+    char courseCode[50];
+    char courseName[100];
+    char filename[100];
+
     int count = 0;
     int i, j;
 
-    fp = fopen("data/attendance.txt", "r");
+    /*
+        Select a course first
+    */
+    printf("\n========================================\n");
+    printf("       SELECT COURSE FOR REPORT\n");
+    printf("========================================\n");
 
-    if (fp == NULL)
+    if (!selectCourse(courseCode, courseName))
     {
-        printf("\nError: Could not open attendance file.\n");
+        printf("\nCourse selection cancelled.\n");
         return;
     }
 
-    /* Read all attendance records */
+    /*
+        Course attendance files are stored like:
+
+        data/CSE1101.txt
+        data/CSE1102.txt
+        data/CSE1103.txt
+    */
+
+    sprintf(filename, "data/%s.txt", courseCode);
+
+    fp = fopen(filename, "r");
+
+    if (fp == NULL)
+    {
+        printf("\nNo attendance record found for %s.\n", courseCode);
+        printf("Course: %s\n", courseName);
+        return;
+    }
+
+    /*
+        Read attendance records for the selected course
+    */
+
     while (fgets(line, sizeof(line), fp) != NULL)
     {
         if (count >= MAX_STUDENTS)
             break;
+
+        /*
+            Expected format:
+
+            *Student Name,Roll,Present,Total,Percentage%
+
+            Example:
+
+            *Amina Rahman,101,4,5,80.00%
+        */
 
         if (sscanf(line,
                    "%99[^,],%d,%d,%d,%f%%",
@@ -49,7 +92,11 @@ void overallAttendanceReport(void)
                    &students[count].totalClasses,
                    &students[count].percentage) == 5)
         {
-            /* Calculate percentage again */
+            /*
+                Calculate percentage again so that
+                the report always shows the correct value.
+            */
+
             if (students[count].totalClasses > 0)
             {
                 students[count].percentage =
@@ -67,13 +114,20 @@ void overallAttendanceReport(void)
 
     fclose(fp);
 
+    /*
+        No records found
+    */
+
     if (count == 0)
     {
-        printf("\nNo valid attendance records found.\n");
+        printf("\nNo valid attendance records found for this course.\n");
         return;
     }
 
-    /* Sort from lowest attendance to highest attendance */
+    /*
+        Sort attendance from LOWEST to HIGHEST
+    */
+
     for (i = 0; i < count - 1; i++)
     {
         for (j = 0; j < count - i - 1; j++)
@@ -88,10 +142,18 @@ void overallAttendanceReport(void)
         }
     }
 
-    /* Display report */
+    /*
+        Display course-wise report
+    */
+
     printf("\n");
     printf("====================================================================\n");
-    printf("              OVERALL CLASS ATTENDANCE REPORT\n");
+    printf("              OVERALL COURSE ATTENDANCE REPORT\n");
+    printf("====================================================================\n");
+
+    printf("Course Code : %s\n", courseCode);
+    printf("Course Name : %s\n", courseName);
+
     printf("====================================================================\n");
 
     printf("%-30s %-8s %-10s %-10s %-12s\n",
@@ -114,6 +176,7 @@ void overallAttendanceReport(void)
     }
 
     printf("====================================================================\n");
+
     printf("\nStudents are sorted from lowest to highest attendance.\n");
 }
 
