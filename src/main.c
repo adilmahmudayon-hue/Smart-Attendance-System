@@ -1,7 +1,7 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 
 #include "../features/record.h"
 #include "../features/present.h"
@@ -11,14 +11,14 @@
 #define TEACHER_ID "T001"
 #define TEACHER_PASSWORD "teacher123"
 
-/* Function declarations */
+#define ADMIN_ID "A001"
+#define ADMIN_PASSWORD "admin123"
 
+/* Function declarations */
 void login(void);
 void teacherMenu(void);
 void studentMenu(int studentRoll);
-
-
-
+void adminMenu(void);
 
 int studentLogin(int *loggedInRoll);
 
@@ -77,7 +77,8 @@ void login(void)
     printf("========================================\n");
     printf("1. Teacher Login\n");
     printf("2. Student Login\n");
-    printf("3. Back\n");
+    printf("3. Admin Login\n");
+    printf("4. Back\n");
     printf("========================================\n");
     printf("Enter your choice: ");
 
@@ -86,6 +87,10 @@ void login(void)
 
     switch (choice)
     {
+        /* ---------------------------------
+           TEACHER LOGIN
+           --------------------------------- */
+
         case 1:
         {
             char teacherID[50];
@@ -117,6 +122,11 @@ void login(void)
             break;
         }
 
+
+        /* ---------------------------------
+           STUDENT LOGIN
+           --------------------------------- */
+
         case 2:
 
             if (studentLogin(&studentRoll))
@@ -126,7 +136,48 @@ void login(void)
 
             break;
 
+
+        /* ---------------------------------
+           ADMIN LOGIN
+           --------------------------------- */
+
         case 3:
+        {
+            char adminID[50];
+            char password[50];
+
+            printf("\n========================================\n");
+            printf("             ADMIN LOGIN\n");
+            printf("========================================\n");
+
+            printf("Admin ID: ");
+            fgets(adminID, sizeof(adminID), stdin);
+            adminID[strcspn(adminID, "\n")] = '\0';
+
+            printf("Password: ");
+            fgets(password, sizeof(password), stdin);
+            password[strcspn(password, "\n")] = '\0';
+
+            if (strcmp(adminID, ADMIN_ID) == 0 &&
+                strcmp(password, ADMIN_PASSWORD) == 0)
+            {
+                printf("\nAdmin login successful!\n");
+                adminMenu();
+            }
+            else
+            {
+                printf("\nInvalid Admin ID or Password!\n");
+            }
+
+            break;
+        }
+
+
+        /* ---------------------------------
+           BACK
+           --------------------------------- */
+
+        case 4:
             return;
 
         default:
@@ -173,12 +224,65 @@ void teacherMenu(void)
                 record();
                 break;
 
-             case 4:
+            case 4:
                 overallAttendanceReport();
                 break;
 
             case 5:
                 printf("\nLogging out from teacher account...\n");
+                return;
+
+            default:
+                printf("\nInvalid choice! Please try again.\n");
+        }
+    }
+}
+
+
+/* =========================================
+   ADMIN MENU
+   ========================================= */
+
+void adminMenu(void)
+{
+    int choice;
+
+    while (1)
+    {
+        printf("\n========================================\n");
+        printf("               ADMIN MENU\n");
+        printf("========================================\n");
+        printf("1. Manage Students\n");
+        printf("2. Manage Teachers\n");
+        printf("3. Manage Courses\n");
+        printf("4. Overall Attendance Record View\n");
+        printf("5. Logout\n");
+        printf("========================================\n");
+        printf("Enter your choice: ");
+
+        scanf("%d", &choice);
+        getchar();
+
+        switch (choice)
+        {
+            case 1:
+                printf("\nStudent Management feature is under development.\n");
+                break;
+
+            case 2:
+                printf("\nTeacher Management feature is under development.\n");
+                break;
+
+            case 3:
+                printf("\nCourse Management feature is under development.\n");
+                break;
+
+            case 4:
+                overallAttendanceReport();
+                break;
+
+            case 5:
+                printf("\nLogging out from admin account...\n");
                 return;
 
             default:
@@ -237,6 +341,7 @@ int studentLogin(int *loggedInRoll)
     char line[500];
 
     int inputRoll;
+
     char inputPassword[100];
 
     int roll;
@@ -271,6 +376,7 @@ int studentLogin(int *loggedInRoll)
     {
         /*
             Format:
+
             Name,Roll,Department,Session,Email,Password
         */
 
@@ -304,7 +410,3 @@ int studentLogin(int *loggedInRoll)
 
     return 0;
 }
-
-
-
-

@@ -3,3 +3,6 @@ Password: teacher123
 
 Roll: 2307001
 Password: student123
+
+Admin ID       : A001
+Admin Password : admin123
