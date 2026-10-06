@@ -159,3 +159,106 @@ void regi(void)
 
     printf("========================================\n");
 }
+void deleteRegistration(void)
+{
+    FILE *fp;
+    FILE *tempFile;
+
+    char line[500];
+    int rollToDelete;
+    int roll;
+    int found = 0;
+
+    fp = fopen("data/student-new.txt", "r");
+
+    if (fp == NULL)
+    {
+        printf("\nNo student registration file found.\n");
+        return;
+    }
+
+    tempFile = fopen("data/student-temp.txt", "w");
+
+    if (tempFile == NULL)
+    {
+        printf("\nError: Could not create temporary file.\n");
+        fclose(fp);
+        return;
+    }
+
+    printf("\n========================================\n");
+    printf("          DELETE REGISTRATION\n");
+    printf("========================================\n");
+
+    printf("Enter student roll to delete: ");
+
+    if (scanf("%d", &rollToDelete) != 1)
+    {
+        printf("\nInvalid roll number.\n");
+
+        while (getchar() != '\n');
+
+        fclose(fp);
+        fclose(tempFile);
+        remove("data/student-temp.txt");
+
+        return;
+    }
+
+    while (getchar() != '\n');
+
+    /*
+        Read every student from the original file.
+        If the roll matches, skip that student.
+        Otherwise, copy the student to the temporary file.
+    */
+
+    while (fgets(line, sizeof(line), fp) != NULL)
+    {
+        if (sscanf(line,
+                   "%*99[^,],%d",
+                   &roll) == 1)
+        {
+            if (roll == rollToDelete)
+            {
+                found = 1;
+                continue;
+            }
+        }
+
+        fputs(line, tempFile);
+    }
+
+    fclose(fp);
+    fclose(tempFile);
+
+    if (!found)
+    {
+        remove("data/student-temp.txt");
+
+        printf("\n========================================\n");
+        printf("No student found with roll %d.\n", rollToDelete);
+        printf("========================================\n");
+
+        return;
+    }
+
+    /*
+        Replace the original student file
+        with the updated temporary file.
+    */
+
+    remove("data/student-new.txt");
+
+    if (rename("data/student-temp.txt",
+               "data/student-new.txt") != 0)
+    {
+        printf("\nError: Could not update student file.\n");
+        return;
+    }
+
+    printf("\n========================================\n");
+    printf("Registration deleted successfully!\n");
+    printf("Deleted student roll: %d\n", rollToDelete);
+    printf("========================================\n");
+}

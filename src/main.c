@@ -200,10 +200,11 @@ void teacherMenu(void)
         printf("             TEACHER MENU\n");
         printf("========================================\n");
         printf("1. New Registration\n");
-        printf("2. Present Call\n");
-        printf("3. Records\n");
-        printf("4. Overall Class Attendance Report\n");
-        printf("5. Exit\n");
+        printf("2. Delete Registration\n");
+        printf("3. Present Call\n");
+        printf("4. Records\n");
+        printf("5. Overall Class Attendance Report\n");
+        printf("6. Exit\n");
         printf("========================================\n");
         printf("Enter your choice: ");
 
@@ -215,20 +216,22 @@ void teacherMenu(void)
             case 1:
                 regi();
                 break;
-
             case 2:
+                deleteRegistration();
+                 break;
+            case 3:
                 present();
                 break;
 
-            case 3:
+            case 4:
                 record();
                 break;
 
-            case 4:
+            case 5:
                 overallAttendanceReport();
                 break;
 
-            case 5:
+            case 6:
                 printf("\nLogging out from teacher account...\n");
                 return;
 
@@ -268,7 +271,7 @@ void adminMenu(void)
             case 1:
                 printf("\nStudent Management feature is under development.\n");
                 break;
-
+            
             case 2:
                 printf("\nTeacher Management feature is under development.\n");
                 break;

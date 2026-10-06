@@ -57,6 +57,5 @@ Swapnil Adhikary,116,cse,25-26,adhikary52507116@stud.kuet.ac.bd
 Sabik Ahmed Saad,117,cse,25-26,saad52507117@stud.kuet.ac.bd
 MD.Salaudden Kader,118,cse,25-26,kader52507118@stud.kuet.ac.bd
 Progga Banarjee,119,cse,25-26,banarjee52507119@stud.kuet.ac.bd
-MD. RUBAYET RANA MAHFUJ,120,cse,25-26,mahfuj52507120@stud.kuet.ac.bd
 rup,109,cse,2-1,rup24@stud.com
 Tahiat Tarannum Urbita,155,cse,25-26,tahiattarannum2007@gmail.com,urbi155
