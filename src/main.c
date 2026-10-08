@@ -7,9 +7,8 @@
 #include "../features/present.h"
 #include "../features/registration.h"
 #include "../features/course.h"
+#include "../features/managecourses.h"
 
-#define TEACHER_ID "T001"
-#define TEACHER_PASSWORD "teacher123"
 
 #define ADMIN_ID "A001"
 #define ADMIN_PASSWORD "admin123"
@@ -108,15 +107,15 @@ void login(void)
             fgets(password, sizeof(password), stdin);
             password[strcspn(password, "\n")] = '\0';
 
-            if (strcmp(teacherID, TEACHER_ID) == 0 &&
-                strcmp(password, TEACHER_PASSWORD) == 0)
+          if (authenticateTeacher(teacherID, password, sizeof(teacherID)))
+         {
+            printf("\nTeacher login successful!\n");
+          showTeacherCourses(teacherID);
+           teacherMenu();
+           }
+         else
             {
-                printf("\nTeacher login successful!\n");
-                teacherMenu();
-            }
-            else
-            {
-                printf("\nInvalid Teacher ID or Password!\n");
+            printf("\nInvalid Teacher ID or Password!\n");
             }
 
             break;
@@ -315,7 +314,8 @@ void adminMenu(void)
                 break;
 
             case 3:
-                printf("\nCourse Management feature is under development.\n");
+                  manageCourses();
+                
                 break;
 
             case 4:

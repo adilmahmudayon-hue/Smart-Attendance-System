@@ -9,6 +9,7 @@ int selectCourse(char courseCode[], char courseName[])
     char line[200];
     char codes[50][50];
     char names[50][100];
+    char passwords[50][100];
 
     int count = 0;
     int choice;
@@ -25,14 +26,14 @@ int selectCourse(char courseCode[], char courseName[])
     {
         line[strcspn(line, "\n")] = '\0';
 
-        if (sscanf(line,
-                   "%49[^,],%99[^\n]",
-                   codes[count],
-                   names[count]) == 2)
-        {
-            count++;
-        }
-
+        if (sscanf(line, "%49[^,],%99[^,],%99[^\r\n]",
+           codes[count],
+           names[count],
+           passwords[count]) == 3)
+{
+    count++;
+}
+        
         if (count >= 50)
         {
             break;

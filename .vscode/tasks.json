@@ -11,6 +11,7 @@
                 "features/present.c",
                 "features/RECORD.c",
                 "features/course.c",
+                "features/managecourses.c",
                 "-Ifeatures",
                 "-o",
                 "attendance.exe"
