@@ -1,61 +1,30 @@
-Md. Imam Ibnul,61,2,2,100.00%
-Md Mahbub Islam,62,2,2,100.00%
-KHONDOKER SHAHID RANA SOHEL,63,2,2,100.00%
-Md. Imam Ibnul,64,2,2,100.00%
-Md Mahbub Islam,65,2,2,100.00%
-MST NUSRAT TAHOSIN NISHAT,66,2,2,100.00%
-Sheikh Rahatul Islam,67,2,2,100.00%
-Md. Maksudur Rahman,68,2,2,100.00%
-Nafis Ahmed(Rakib),69,2,2,100.00%
-Juthi Das Tina,70,1,2,50.00%
-Mehrab Hossain,71,1,2,50.00%
-MD. Niamul Hassan,72,2,2,100.00%
-MD. SIAM AHMMED,73,2,2,100.00%
-Mahir Tajwar,74,2,2,100.00%
-Jubayer Ahmed,75,2,2,100.00%
-Md.Sakibul Hasan Toushin,76,2,2,100.00%
-Imran Ahmed,77,1,2,50.00%
-Sharker Anika Mahzabeen Othoi,78,1,2,50.00%
-Kazi Sharah Mehenaz Meghi,79,1,2,50.00%
-Md. Abrar Ur Rashid Jawar,80,2,2,100.00%
-Zawad Ibrahim,81,2,2,100.00%
-Sarani Saha Sheta,82,2,2,100.00%
-Rubiya Rahman Mela,83,1,2,50.00%
-MD Naimul Islam Niloy,84,1,2,50.00%
-Fariha Jannat Fiha,85,0,2,0.00%
-Muhammad Tahmid Ahnaf,86,1,2,50.00%
-Joydeep Chowdhury,87,1,2,50.00%
-Maruf Rahman,88,1,2,50.00%
-Maliha Fairoz,89,1,2,50.00%
-Mahbub Hasan Shanto,90,1,2,50.00%
-Mitaly Farzana,91,2,2,100.00%
-MD. Nafis Hasan Pranto,92,2,2,100.00%
-Muhtadi Yashar,93,2,2,100.00%
-Tahsin Hossain Chowdhury,94,2,2,100.00%
-Md. Robius Suny Refat,95,2,2,100.00%
-Rahib Abid,96,2,2,100.00%
-Antora Ghosh,97,2,2,100.00%
-Iftekharun Kabir Chowdhury Nice,98,2,2,100.00%
-Mithila Chowdhury Ritu,99,2,2,100.00%
-S.M. TANZIM SIDDIQUE,100,2,2,100.00%
-Arian Ahasan,101,2,2,100.00%
-Arijit Das,102,2,2,100.00%
-Adil Mahmud Ayon,103,2,2,100.00%
-Nishat Tasneem,104,2,2,100.00%
-Jafrin Rahman Oishe,105,1,2,50.00%
-Md Abdullah All Noman Nazir,106,1,2,50.00%
-Istamma Hossain Barka,107,2,2,100.00%
-Jeba Tasnim Raina,108,2,2,100.00%
-Mostafijur Rahman,109,2,2,100.00%
-Orna Alam,110,2,2,100.00%
-Anirban Sarkar Durjoy,111,2,2,100.00%
-Nur Muhammad Apon,112,2,2,100.00%
-Aniruddho Biswas,113,2,2,100.00%
-Udita Sen,114,2,2,100.00%
-ISMAIL HOSSAIN,115,2,2,100.00%
-Swapnil Adhikary,116,2,2,100.00%
-Sabik Ahmed Saad,117,2,2,100.00%
-MD.Salaudden Kader,118,2,2,100.00%
-Progga Banarjee,119,2,2,100.00%
-Tahiat Tarannum Urbita,155,2,2,100.00%
-Shamapty Saha ,14,1,1,100.00%
+Mitaly Farzana,91,4,4,100.00%
+MD. Nafis Hasan Pranto,92,4,4,100.00%
+Muhtadi Yashar,93,4,4,100.00%
+Tahsin Hossain Chowdhury,94,4,4,100.00%
+Md. Robius Suny Refat,95,4,4,100.00%
+Rahib Abid,96,4,4,100.00%
+Antora Ghosh,97,4,4,100.00%
+Iftekharun Kabir Chowdhury Nice,98,4,4,100.00%
+Mithila Chowdhury Ritu,99,4,4,100.00%
+S.M. TANZIM SIDDIQUE,100,4,4,100.00%
+Arian Ahasan,101,4,4,100.00%
+Arijit Das,102,4,4,100.00%
+Adil Mahmud Ayon,103,4,4,100.00%
+Nishat Tasneem,104,4,4,100.00%
+Jafrin Rahman Oishe,105,3,4,75.00%
+Md Abdullah All Noman Nazir,106,3,4,75.00%
+Istamma Hossain Barka,107,4,4,100.00%
+Jeba Tasnim Raina,108,4,4,100.00%
+Mostafijur Rahman,109,4,4,100.00%
+Orna Alam,110,4,4,100.00%
+Anirban Sarkar Durjoy,111,4,4,100.00%
+Nur Muhammad Apon,112,4,4,100.00%
+Aniruddho Biswas,113,3,4,75.00%
+Udita Sen,114,3,4,75.00%
+ISMAIL HOSSAIN,115,3,4,75.00%
+Swapnil Adhikary,116,3,4,75.00%
+Sabik Ahmed Saad,117,4,4,100.00%
+MD.Salaudden Kader,118,4,4,100.00%
+Progga Banarjee,119,4,4,100.00%
+Tahiat Tarannum Urbita,155,3,3,100.00%
