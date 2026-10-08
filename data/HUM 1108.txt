@@ -1,0 +1,30 @@
+Mitaly Farzana,91,2,3,66.67%
+MD. Nafis Hasan Pranto,92,2,3,66.67%
+Muhtadi Yashar,93,3,3,100.00%
+Tahsin Hossain Chowdhury,94,3,3,100.00%
+Md. Robius Suny Refat,95,3,3,100.00%
+Rahib Abid,96,3,3,100.00%
+Antora Ghosh,97,2,3,66.67%
+Iftekharun Kabir Chowdhury Nice,98,2,3,66.67%
+Mithila Chowdhury Ritu,99,2,3,66.67%
+S.M. TANZIM SIDDIQUE,100,3,3,100.00%
+Arian Ahasan,101,2,3,66.67%
+Arijit Das,102,2,3,66.67%
+Adil Mahmud Ayon,103,2,3,66.67%
+Nishat Tasneem,104,0,3,0.00%
+Jafrin Rahman Oishe,105,0,3,0.00%
+Md Abdullah All Noman Nazir,106,0,2,0.00%
+Istamma Hossain Barka,107,0,2,0.00%
+Jeba Tasnim Raina,108,0,2,0.00%
+Mostafijur Rahman,109,0,2,0.00%
+Orna Alam,110,0,2,0.00%
+Anirban Sarkar Durjoy,111,1,2,50.00%
+Nur Muhammad Apon,112,1,2,50.00%
+Aniruddho Biswas,113,1,2,50.00%
+Udita Sen,114,2,2,100.00%
+ISMAIL HOSSAIN,115,2,2,100.00%
+Swapnil Adhikary,116,2,2,100.00%
+Sabik Ahmed Saad,117,1,2,50.00%
+MD.Salaudden Kader,118,1,2,50.00%
+Progga Banarjee,119,2,2,100.00%
+Tahiat Tarannum Urbita,155,2,2,100.00%

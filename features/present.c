@@ -93,7 +93,8 @@ static int save_session(
 }
 
 
-void present(void)
+void present(const char selectedCourseCode[],
+             const char selectedCourseName[])
 {
     FILE *studentFile;
     FILE *attendanceFile;
@@ -137,11 +138,11 @@ void present(void)
     printf("          COURSE-WISE ATTENDANCE\n");
     printf("========================================\n");
 
-    if (!selectCourse(courseCode, courseName))
-    {
-        printf("\nCourse selection cancelled.\n");
-        return;
-    }
+    
+        snprintf(courseCode, sizeof(courseCode), "%s", selectedCourseCode);
+        snprintf(courseName, sizeof(courseName), "%s", selectedCourseName);
+        
+    
 
 
     /*

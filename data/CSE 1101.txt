@@ -1,30 +1,30 @@
-Mitaly Farzana,91,4,4,100.00%
-MD. Nafis Hasan Pranto,92,4,4,100.00%
-Muhtadi Yashar,93,4,4,100.00%
-Tahsin Hossain Chowdhury,94,4,4,100.00%
-Md. Robius Suny Refat,95,4,4,100.00%
-Rahib Abid,96,4,4,100.00%
-Antora Ghosh,97,4,4,100.00%
-Iftekharun Kabir Chowdhury Nice,98,4,4,100.00%
-Mithila Chowdhury Ritu,99,4,4,100.00%
-S.M. TANZIM SIDDIQUE,100,4,4,100.00%
-Arian Ahasan,101,4,4,100.00%
-Arijit Das,102,4,4,100.00%
-Adil Mahmud Ayon,103,4,4,100.00%
-Nishat Tasneem,104,4,4,100.00%
-Jafrin Rahman Oishe,105,3,4,75.00%
-Md Abdullah All Noman Nazir,106,3,4,75.00%
-Istamma Hossain Barka,107,4,4,100.00%
-Jeba Tasnim Raina,108,4,4,100.00%
-Mostafijur Rahman,109,4,4,100.00%
-Orna Alam,110,4,4,100.00%
-Anirban Sarkar Durjoy,111,4,4,100.00%
-Nur Muhammad Apon,112,4,4,100.00%
-Aniruddho Biswas,113,3,4,75.00%
-Udita Sen,114,3,4,75.00%
-ISMAIL HOSSAIN,115,3,4,75.00%
-Swapnil Adhikary,116,3,4,75.00%
-Sabik Ahmed Saad,117,4,4,100.00%
-MD.Salaudden Kader,118,4,4,100.00%
-Progga Banarjee,119,4,4,100.00%
-Tahiat Tarannum Urbita,155,3,3,100.00%
+Mitaly Farzana,91,5,5,100.00%
+MD. Nafis Hasan Pranto,92,5,5,100.00%
+Muhtadi Yashar,93,5,5,100.00%
+Tahsin Hossain Chowdhury,94,5,5,100.00%
+Md. Robius Suny Refat,95,5,5,100.00%
+Rahib Abid,96,5,5,100.00%
+Antora Ghosh,97,5,5,100.00%
+Iftekharun Kabir Chowdhury Nice,98,5,5,100.00%
+Mithila Chowdhury Ritu,99,5,5,100.00%
+S.M. TANZIM SIDDIQUE,100,5,5,100.00%
+Arian Ahasan,101,5,5,100.00%
+Arijit Das,102,5,5,100.00%
+Adil Mahmud Ayon,103,5,5,100.00%
+Nishat Tasneem,104,5,5,100.00%
+Jafrin Rahman Oishe,105,4,5,80.00%
+Md Abdullah All Noman Nazir,106,4,5,80.00%
+Istamma Hossain Barka,107,5,5,100.00%
+Jeba Tasnim Raina,108,4,5,80.00%
+Mostafijur Rahman,109,4,5,80.00%
+Orna Alam,110,4,5,80.00%
+Anirban Sarkar Durjoy,111,4,5,80.00%
+Nur Muhammad Apon,112,4,5,80.00%
+Aniruddho Biswas,113,3,5,60.00%
+Udita Sen,114,4,5,80.00%
+ISMAIL HOSSAIN,115,4,5,80.00%
+Swapnil Adhikary,116,4,5,80.00%
+Sabik Ahmed Saad,117,5,5,100.00%
+MD.Salaudden Kader,118,5,5,100.00%
+Progga Banarjee,119,5,5,100.00%
+Tahiat Tarannum Urbita,155,4,4,100.00%

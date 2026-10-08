@@ -15,11 +15,12 @@
 
 /* Function declarations */
 void login(void);
-void teacherMenu(void);
+
 void studentMenu(int studentRoll);
 void adminMenu(void);
 
 int studentLogin(int *loggedInRoll);
+void teacherMenu(const char teacherId[]);
 
 
 /* =========================================
@@ -110,8 +111,7 @@ void login(void)
           if (authenticateTeacher(teacherID, password, sizeof(teacherID)))
          {
             printf("\nTeacher login successful!\n");
-          showTeacherCourses(teacherID);
-           teacherMenu();
+          teacherMenu(teacherID);
            }
          else
             {
@@ -189,48 +189,107 @@ void login(void)
    TEACHER MENU
    ========================================= */
 
-void teacherMenu(void)
+void teacherMenu(const char teacherId[])
 {
-    int choice;
+    char courseCodes[100][50];
+    char courseTitles[100][100];
+    int courseCount;
+    int courseChoice;
+    int action;
+    int i;
 
     while (1)
     {
-        printf("\n========================================\n");
-        printf("             TEACHER MENU\n");
-        printf("========================================\n");
-        
-        printf("1. Present Call\n");
-        printf("2. Records\n");
-        
-        printf("3. Exit\n");
-        printf("========================================\n");
-        printf("Enter your choice: ");
+        courseCount = getTeacherCourses(
+            teacherId, courseCodes, courseTitles, 100);
 
-        scanf("%d", &choice);
-        getchar();
+        printf("\n========== YOUR ASSIGNED COURSES ==========\n");
 
-        switch (choice)
+        if (courseCount == 0)
         {
-            
-            case 1:
-                present();
-                break;
+            printf("No courses are assigned to you.\n");
+            printf("1. Exit\n");
+            printf("Choose: ");
 
-            case 2:
-                record();
-                break;
-
-            case 3:
-                printf("\nLogging out from teacher account...\n");
+            if (scanf("%d", &action) != 1 || action == 1)
+            {
+                while (getchar() != '\n') {}
                 return;
+            }
 
-            default:
-                printf("\nInvalid choice! Please try again.\n");
+            while (getchar() != '\n') {}
+            continue;
+        }
+
+        for (i = 0; i < courseCount; i++)
+        {
+            printf("%d. %s - %s\n",
+                   i + 1, courseCodes[i], courseTitles[i]);
+        }
+
+        printf("%d. Exit\n", courseCount + 1);
+        printf("Choose a course: ");
+
+        if (scanf("%d", &courseChoice) != 1)
+        {
+            while (getchar() != '\n') {}
+            return;
+        }
+
+        if (courseChoice == courseCount + 1)
+        {
+            while (getchar() != '\n') {}
+            return;
+        }
+
+        if (courseChoice < 1 || courseChoice > courseCount)
+        {
+            printf("Invalid course choice.\n");
+            while (getchar() != '\n') {}
+            continue;
+        }
+
+        while (getchar() != '\n') {}
+
+        while (1)
+        {
+            printf("\nCourse: %s - %s\n",
+                   courseCodes[courseChoice - 1],
+                   courseTitles[courseChoice - 1]);
+
+            printf("1. Present Call\n");
+            printf("2. Records\n");
+            printf("3. Back to assigned courses\n");
+            printf("Choose: ");
+
+            if (scanf("%d", &action) != 1)
+            {
+                while (getchar() != '\n') {}
+                break;
+            }
+
+            while (getchar() != '\n') {}
+
+            if (action == 1)
+            {
+                present(courseCodes[courseChoice - 1],
+                        courseTitles[courseChoice - 1]);
+            }
+            else if (action == 2)
+            {
+                recordForCourse(courseCodes[courseChoice - 1]);
+            }
+            else if (action == 3)
+            {
+                break;
+            }
+            else
+            {
+                printf("Invalid choice.\n");
+            }
         }
     }
 }
-
-
 
    
 

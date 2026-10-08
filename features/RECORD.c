@@ -184,7 +184,7 @@ void overallAttendanceReport(void)
 /* =========================================
    SEARCH STUDENT RECORD BY ROLL
    ========================================= */
-void record(void)
+void recordForCourse(const char courseCode[])
 {
     FILE *fp;
     char line[500];
@@ -207,7 +207,12 @@ void record(void)
     printf("Enter student roll: ");
     scanf("%d", &searchRoll);
 
-    fp = fopen("data/attendance.txt", "r");
+    char attendanceFileName[150];
+
+snprintf(attendanceFileName, sizeof(attendanceFileName),
+         "data/%s.txt", courseCode);
+
+fp = fopen(attendanceFileName, "r");
 
     if (fp == NULL)
     {

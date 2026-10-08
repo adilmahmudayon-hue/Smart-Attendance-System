@@ -318,3 +318,37 @@ int authenticateTeacher(const char teacherId[],
 
     return 0;
 }
+int getTeacherCourses(const char teacherId[],
+                      char courseCodes[][50],
+                      char courseTitles[][100],
+                      int maxCourses)
+{
+    Course courses[MAX_COURSES];
+    Assignment assignments[MAX_ASSIGNMENTS];
+
+    int courseCount = loadCourses(courses);
+    int assignmentCount = loadAssignments(assignments);
+    int resultCount = 0;
+    int i, j;
+
+    for (i = 0; i < assignmentCount && resultCount < maxCourses; i++)
+    {
+        if (strcmp(assignments[i].teacherId, teacherId) != 0)
+        {
+            continue;
+        }
+
+        for (j = 0; j < courseCount; j++)
+        {
+            if (strcmp(assignments[i].courseCode, courses[j].code) == 0)
+            {
+                strcpy(courseCodes[resultCount], courses[j].code);
+                strcpy(courseTitles[resultCount], courses[j].title);
+                resultCount++;
+                break;
+            }
+        }
+    }
+
+    return resultCount;
+}
