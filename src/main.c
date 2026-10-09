@@ -352,10 +352,10 @@ void adminMenu(void)
         printf("               ADMIN MENU\n");
         printf("========================================\n");
         printf("1. Manage Students\n");
-        printf("2. Manage Teachers\n");
-        printf("3. Manage Courses\n");
-        printf("4. Overall Attendance Record View\n");
-        printf("5. Logout\n");
+       
+        printf("2. Manage Courses\n");
+        printf("3. Overall Attendance Record View\n");
+        printf("4. Logout\n");
         printf("========================================\n");
         printf("Enter your choice: ");
 
@@ -368,20 +368,18 @@ void adminMenu(void)
                  manageStudents();
                  break;
             
-            case 2:
-                printf("\nTeacher Management feature is under development.\n");
-                break;
+            
 
-            case 3:
+            case 2:
                   manageCourses();
                 
                 break;
 
-            case 4:
+            case 3:
                 overallAttendanceReport();
                 break;
 
-            case 5:
+            case 4:
                 printf("\nLogging out from admin account...\n");
                 return;
 
