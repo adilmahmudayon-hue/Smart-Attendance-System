@@ -58,23 +58,16 @@ The course-wise attendance report includes:
 | Attendance  | Attendance percentage for that course |
 
 The report identifies the logged-in student automatically, so the student does not need to enter their roll number again to view their own records.
+## 📊 Attendance Calculation
 
-### 📊 Course-Wise Attendance Reporting
-
-The student report displays attendance separately for each course.
-
-For example, a student may have different attendance percentages in Structured Programming, English and Human Communication Laboratory, and Differential and Integral Calculus.
-
-Attendance is calculated using:
+The attendance percentage is calculated using the following formula:
 
 $$
-\text{Attendance Percentage}
-=
-\frac{\text{Classes Attended}}{\text{Total Classes}}
-\times 100
+\text{Attendance Percentage} =
+\frac{\text{Classes Attended}}{\text{Total Classes}} \times 100
 $$
 
-The reporting module uses a **75% threshold** for low-attendance warnings where that check is applied.
+The system uses a **75% attendance threshold** to identify students with low attendance and display warnings where applicable.
 
 ### 📁 File-Based Data Management
 
