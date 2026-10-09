@@ -2,148 +2,149 @@
 
 A menu-driven **Smart Attendance System developed in C** for the CSE 1102 Structured Programming Lab at Khulna University of Engineering & Technology (KUET).
 
-The application provides role-based access for teachers, students, and administrators. It supports student registration, attendance tracking, attendance reports, percentage calculations, and file-based data management.
+The system provides separate access for administrators, teachers, and students. It supports student registration, assigned-course workflows for teachers, attendance tracking, course-wise student attendance reports, and file-based data management.
 
 ## 🎯 Project Overview
 
-Traditional attendance management can be time-consuming and makes it difficult to maintain organized records. This project provides a simple, file-based solution using the C programming language.
+Managing attendance manually can be time-consuming, particularly when students attend multiple courses. This project aims to simplify attendance management through a modular C application with role-based menus and persistent file storage.
 
-The system follows a modular architecture, separating the main application flow from individual feature modules. This makes the project easier to understand, maintain, test, and extend.
+The system separates administrative tasks, teacher attendance operations, and student record viewing to provide a clear and organized workflow.
 
 ## ✨ Features
 
+### 🛡️ Admin Module
+
+The Admin Menu provides the following options:
+
+1. **Manage Students** — access student management functionality.
+2. **Manage Courses** — access course management functionality.
+3. **Overall Attendance Record View** — view the overall attendance report.
+4. **Logout** — exit the administrator session.
+
 ### 👨‍🏫 Teacher Module
 
-* Secure teacher login
-* Register new students
-* Select a course for attendance
-* Mark student attendance
-* View individual student attendance records
-* Calculate attendance percentages
-* Display attendance-status messages
-* View overall class attendance reports
+Teachers log in using their teacher credentials and select from their assigned courses.
+
+**Teacher workflow:**
+
+1. Teacher Login
+2. Display assigned courses
+3. Select a course
+4. Choose an operation:
+
+   * **Present Call** — take attendance for the selected course.
+   * **Records** — access attendance records.
+   * **Back to assigned courses** — return to the course list.
+
+This course-based workflow allows teachers to work within the context of a specific assigned course instead of selecting from an unrestricted course list.
 
 ### 🎓 Student Module
 
-* Log in using registered student credentials
-* View personal attendance records
-* Check classes attended and total classes
-* View attendance percentage
-* Receive a warning when attendance falls below the 75% threshold
+Students log in using their roll number and password. After successful authentication, the system welcomes the student by name.
 
-### 🛡️ Admin Module
+The Student Menu provides:
 
-* Dedicated administrator login
-* Admin dashboard with a menu-based interface
-* Student management option
-* Teacher management option
-* Course management option
-* Overall Attendance Record View
-* Logout functionality
+* **Records** — display the student's course-wise attendance.
+* **Exit** — leave the student session.
 
-*Note: Student management, teacher management, and course management are menu options intended for further development.*
+The course-wise attendance report includes:
 
-### 📚 Course Management and Attendance
+| Field       | Description                           |
+| ----------- | ------------------------------------- |
+| Course Code | Identifier of the course              |
+| Course Name | Name of the course                    |
+| Present     | Number of classes attended            |
+| Total       | Total recorded classes                |
+| Attendance  | Attendance percentage for that course |
 
-* Display available courses from a course configuration file
-* Select a course before taking attendance
-* Support course-specific attendance storage as the system is extended
-* Keep student and attendance information in text files
+The report identifies the logged-in student automatically, so the student does not need to enter their roll number again to view their own records.
 
-### 💾 File-Based Data Management
+### 📊 Course-Wise Attendance Reporting
 
-The application uses file handling in C to store and retrieve project data.
+The student report displays attendance separately for each course.
 
-| File                   | Purpose                                                        |
-| ---------------------- | -------------------------------------------------------------- |
-| `data/student-new.txt` | Registered student information and login details               |
-| `data/attendance.txt`  | Attendance records used by the current record-reporting module |
-| `data/courses.txt`     | Available course codes and names                               |
-| `data/logininputs.txt` | Login-related input data                                       |
-| `data/command.txt`     | Project-related command/input information                      |
+For example, a student may have different attendance percentages in Structured Programming, English and Human Communication Laboratory, and Differential and Integral Calculus.
 
-Additional course-specific attendance files may be created as the course-wise attendance implementation develops.
+Attendance is calculated using:
+
+$$
+\text{Attendance Percentage}
+=
+\frac{\text{Classes Attended}}{\text{Total Classes}}
+\times 100
+$$
+
+The reporting module uses a **75% threshold** for low-attendance warnings where that check is applied.
+
+### 📁 File-Based Data Management
+
+The project uses text files to store and retrieve information, demonstrating file handling in C.
+
+* Student registration and login information
+* Course information
+* Attendance records
+* Course-wise attendance data used by the reporting workflow
 
 ## 🏗️ Architecture
 
-The application uses a modular, menu-driven C architecture. The main program handles navigation and authentication, feature modules perform registration and attendance operations, and text files provide persistent storage.
+The Smart Attendance System follows a modular, file-based architecture developed in C. The main application manages authentication and role-based navigation. Administrators can access student management, course management, and overall attendance reporting. Teachers can select their assigned courses to take attendance or view records, while students can access their personal course-wise attendance reports.
+
+The system uses text files to store student information, teacher information, course details, teacher-course assignments, and course-specific attendance records. Separate C source and header files organize the application's features into reusable modules.
+
 
 ### System Workflow
 
 ```mermaid
 flowchart TD
-    A([Start Application]) --> B[Main Menu]
-    B --> C{Select Option}
-    C -->|Login| D[Login Menu]
-    C -->|Exit| Z([End])
+    A([Start]) --> B[Main Menu]
+    B --> C[Login Menu]
 
-    D --> E[Teacher Login]
-    D --> F[Student Login]
-    D --> G[Admin Login]
+    C --> D[Admin Login]
+    C --> E[Teacher Login]
+    C --> F[Student Login]
 
-    E --> H[Teacher Menu]
-    F --> I[Student Menu]
-    G --> J[Admin Menu]
+    D --> G[Admin Menu]
+    E --> H[Teacher Login Successful]
+    F --> I[Student Login Successful]
 
-    H --> K[Student Registration]
-    H --> L[Course Selection and Attendance]
-    H --> M[Attendance Records and Reports]
+    G --> J[Manage Students]
+    G --> K[Manage Courses]
+    G --> L[Overall Attendance Record View]
 
-    I --> N[View Personal Attendance]
-    J --> O[Student Management]
-    J --> P[Teacher Management]
-    J --> Q[Course Management]
-    J --> R[Overall Attendance Record View]
+    H --> M[Display Assigned Courses]
+    M --> N[Select Course]
+    N --> O[Present Call]
+    N --> P[Records]
+    N --> Q[Back to Assigned Courses]
 
-    K --> S[(Text File Storage)]
-    L --> S
-    M --> S
-    N --> S
-    O --> S
-    P --> S
-    Q --> S
-    R --> S
+    I --> R[Student Menu]
+    R --> S[View My Course-Wise Attendance]
 
-    H --> B
-    I --> B
-    J --> B
+    J --> T[(File Storage)]
+    K --> T
+    L --> T
+    O --> T
+    P --> T
+    S --> T
+
+    Q --> M
+    O --> N
+    P --> N
 ```
 
-### Architecture Components
+### Main Components
 
-| Component                 | Responsibility                                       |
-| ------------------------- | ---------------------------------------------------- |
-| `src/main.c`              | Main menu, authentication, and role-based navigation |
-| `features/REGISTRATION.c` | Student registration                                 |
-| `features/present.c`      | Attendance-taking functionality                      |
-| `features/RECORD.c`       | Student attendance records and overall reporting     |
-| `features/course.c`       | Course selection                                     |
-| `features/*.h`            | Function declarations shared between modules         |
-| `data/`                   | Text files used for persistent data storage          |
-| `.vscode/tasks.json`      | Automated multi-file compilation                     |
-| `.vscode/launch.json`     | VS Code debugging and execution configuration        |
-
-## 🔄 Application Workflow
-
-1. The user launches the application.
-2. The user selects Login from the main menu.
-3. The user chooses Teacher Login, Student Login, or Admin Login.
-4. The system validates the supplied credentials.
-5. The application displays the corresponding role-specific menu.
-6. Teachers can register students, select courses, take attendance, and view reports.
-7. Students can view their own attendance information.
-8. Administrators can access the overall attendance report and the available management menus.
-9. Data is read from or written to text files as required.
-
-## 🧰 Technology Stack
-
-* **Language:** C
-* **Compiler:** GCC (MinGW on Windows)
-* **IDE:** Visual Studio Code
-* **Version Control:** Git and GitHub
-* **Data Storage:** Text files
-* **Build Automation:** VS Code Tasks
-* **Debugging:** VS Code C/C++ debugger
+| Component                 | Responsibility                                   |
+| ------------------------- | ------------------------------------------------ |
+| `src/main.c`              | Main menu, login flow, and role-based navigation |
+| `features/REGISTRATION.c` | Student registration                             |
+| `features/present.c`      | Attendance-taking functionality                  |
+| `features/RECORD.c`       | Attendance records and reporting                 |
+| `features/course.c`       | Course selection                                 |
+| `features/*.h`            | Function declarations shared between modules     |
+| `data/`                   | Text-file data storage                           |
+| `.vscode/tasks.json`      | Automated multi-file compilation                 |
+| `.vscode/launch.json`     | VS Code launch and debugging configuration       |
 
 ## 📂 Project Structure
 
@@ -151,47 +152,76 @@ flowchart TD
 Smart-Attendance-System/
 │
 ├── .vscode/
-│   ├── tasks.json
-│   └── launch.json
+│   ├── launch.json
+│   └── tasks.json
 │
 ├── data/
-│   ├── attendance.txt
 │   ├── command.txt
+│   ├── course-assignments.txt
 │   ├── courses.txt
+│   ├── CSE 1101-session.txt
+│   ├── CSE 1101.txt
+│   ├── HUM 1108-session.txt
+│   ├── HUM 1108.txt
 │   ├── logininputs.txt
-│   └── student-new.txt
+│   ├── MATH 1107.txt
+│   ├── student-new.txt
+│   └── teacher.txt
 │
 ├── features/
+│   ├── course.c
+│   ├── course.h
+│   ├── managecourses.c
+│   ├── managecourses.h
 │   ├── present.c
 │   ├── present.h
 │   ├── RECORD.c
 │   ├── record.h
 │   ├── REGISTRATION.c
-│   ├── registration.h
-│   ├── course.c
-│   └── course.h
+│   └── registration.h
 │
 ├── src/
 │   ├── main.c
 │   └── previous/
 │
 ├── .gitignore
-├── LICENSE
 └── README.md
 ```
 
-*The tree describes the intended/current modular layout. Individual course attendance files may appear in `data/` as that functionality is implemented.*
+### 📁 Directory Description
 
-## 🚀 Getting Started
+| Directory/File                | Purpose                                              |
+| ----------------------------- | ---------------------------------------------------- |
+| `src/main.c`                  | Main application, login system, and role-based menus |
+| `features/course.c`           | Course selection                                     |
+| `features/managecourses.c`    | Course management functionality                      |
+| `features/present.c`          | Attendance-taking functionality                      |
+| `features/RECORD.c`           | Attendance records and reporting                     |
+| `features/REGISTRATION.c`     | Student registration                                 |
+| `data/courses.txt`            | Course information                                   |
+| `data/course-assignments.txt` | Teacher-course assignment information                |
+| `data/teacher.txt`            | Teacher information                                  |
+| `data/student-new.txt`        | Student information and login credentials            |
+| `data/CSE 1101.txt`           | Attendance data for CSE 1101                         |
+| `data/CSE 1101-session.txt`   | Session data for CSE 1101                            |
+| `data/HUM 1108.txt`           | Attendance data for HUM 1108                         |
+| `data/HUM 1108-session.txt`   | Session data for HUM 1108                            |
+| `data/MATH 1107.txt`          | Attendance data for MATH 1107                        |
+| `.vscode/tasks.json`          | Automated compilation of the project                 |
+| `.vscode/launch.json`         | VS Code launch and debugging configuration           |
 
-### Prerequisites
 
-Install the following tools:
+## 🧰 Technologies Used
 
-* [Git](https://git-scm.com/downloads)
-* [GCC / MinGW](https://www.mingw-w64.org/)
-* [Visual Studio Code](https://code.visualstudio.com/)
-* VS Code C/C++ extension
+* **Programming Language:** C
+* **Compiler:** GCC / MinGW
+* **IDE:** Visual Studio Code
+* **Version Control:** Git and GitHub
+* **Data Storage:** Text files
+* **Build Automation:** VS Code Tasks
+* **Debugging:** VS Code C/C++ debugger
+
+## 🚀 Installation and Execution
 
 ### 1. Clone the Repository
 
@@ -202,7 +232,7 @@ cd Smart-Attendance-System
 
 ### 2. Compile the Project
 
-Run the following command from the repository root:
+Run this command from the project root directory:
 
 ```bash
 gcc src/main.c features/REGISTRATION.c features/present.c features/RECORD.c features/course.c -Ifeatures -o attendance.exe
@@ -216,66 +246,37 @@ On Windows PowerShell:
 .\attendance.exe
 ```
 
-### 4. Build and Run Through VS Code
+### 4. Run Through Visual Studio Code
 
-The repository includes VS Code build and launch configurations.
+The project includes shared VS Code build and launch configurations.
 
-1. Open the project folder in VS Code.
-2. Select **Run and Debug** from the sidebar.
+1. Open the repository folder in VS Code.
+2. Select **Run and Debug**.
 3. Choose **Run Smart Attendance System**.
 4. Click the green Start button.
-5. The build task compiles the required C source files before launching the program.
 
-**Important:** Close any running instance of `attendance.exe` before rebuilding if Windows reports a permission error.
-
-## 🔐 Login and Access
-
-The application provides three separate login paths:
-
-| Role    | Access                                                   |
-| ------- | -------------------------------------------------------- |
-| Teacher | Student registration, attendance-taking, and reports     |
-| Student | Personal attendance records                              |
-| Admin   | Overall attendance reporting and management menu options |
-
-Use the credentials configured in the current source code. For a shared or public deployment, replace demonstration credentials with a safer authentication approach. Do not publish real passwords in the README.
-
-## 📊 Attendance Calculation
-
-Attendance percentage is calculated using:
-
-$$
-\text{Attendance Percentage}
-=
-\frac{\text{Classes Attended}}{\text{Total Classes}}
-\times 100
-$$
-
-The current reporting logic uses a **75% threshold** to determine whether a student's attendance is low.
+The configured build task compiles the required source files before launching the application.
 
 ## 🧠 C Programming Concepts Demonstrated
-
-This project applies core concepts from the Structured Programming Lab:
 
 * Functions and modular programming
 * Conditional statements and loops
 * Arrays and strings
 * Pointers and function parameters
-* File handling for persistent storage
-* Input validation and menu-driven interaction
-* Structures of related modules through header files
-* Basic authentication and role-based navigation
+* File handling and persistent storage
+* Input validation
+* Role-based menu navigation
+* Multi-file compilation and header files
+* Attendance percentage calculations
 
 ## 🛣️ Future Improvements
 
-* Complete student management for administrators
-* Implement teacher management
-* Implement course management
-* Complete course-wise attendance reporting
-* Improve input validation and error handling
-* Strengthen credential storage and authentication
-* Add more detailed attendance summaries
-* Improve the console interface and user experience
+* Extend administrative student and course management
+* Add teacher management and course-assignment controls
+* Improve attendance-record filtering and reporting
+* Strengthen password storage and authentication
+* Improve validation and error handling
+* Add more detailed course-wise and overall summaries
 
 ## 🤝 Team Members
 
@@ -283,15 +284,15 @@ This project applies core concepts from the Structured Programming Lab:
 * **Antora Ghosh** — [@agantoraghosh-prog](https://github.com/agantoraghosh-prog)
 * **Mitaly Farzana Oishe** — [@mitalyoyshe](https://github.com/mitalyoyshe)
 
-## 🌿 Collaboration Workflow
+## 🔄 GitHub Collaboration
 
-To download the latest changes:
+Pull the latest changes:
 
 ```bash
 git pull origin main
 ```
 
-After making your changes:
+After making changes:
 
 ```bash
 git add .
@@ -299,11 +300,11 @@ git commit -m "Describe your changes"
 git push origin main
 ```
 
-Always pull the latest changes before beginning shared work, and coordinate with teammates to reduce merge conflicts.
+Pull before starting shared work to reduce merge conflicts.
 
 ## 📄 License
 
-See the [LICENSE](LICENSE) file for the project's licensing information.
+See the [LICENSE](LICENSE) file for licensing information.
 
 ---
 
