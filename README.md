@@ -175,7 +175,7 @@ Smart-Attendance-System/
 │
 ├── src/
 │   ├── main.c
-│   └── previous/
+│   
 │
 ├── .gitignore
 └── README.md
@@ -295,10 +295,6 @@ git push origin main
 
 Pull before starting shared work to reduce merge conflicts.
 
-## 📄 License
 
-See the [LICENSE](LICENSE) file for licensing information.
-
----
 
 **Developed as a CSE 1102 Structured Programming Lab project at KUET.**
