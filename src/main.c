@@ -75,9 +75,9 @@ void login(void)
     printf("\n========================================\n");
     printf("                 LOGIN\n");
     printf("========================================\n");
-    printf("1. Teacher Login\n");
-    printf("2. Student Login\n");
-    printf("3. Admin Login\n");
+    printf("1. Admin Login\n");
+    printf("2. Teacher Login\n");
+    printf("3. Student Login\n");
     printf("4. Back\n");
     printf("========================================\n");
     printf("Enter your choice: ");
@@ -91,7 +91,7 @@ void login(void)
            TEACHER LOGIN
            --------------------------------- */
 
-        case 1:
+        case 2:
         {
             char teacherID[50];
             char password[50];
@@ -126,7 +126,7 @@ void login(void)
            STUDENT LOGIN
            --------------------------------- */
 
-        case 2:
+        case 3:
 
             if (studentLogin(&studentRoll))
             {
@@ -140,7 +140,7 @@ void login(void)
            ADMIN LOGIN
            --------------------------------- */
 
-        case 3:
+        case 1:
         {
             char adminID[50];
             char password[50];
