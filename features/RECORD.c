@@ -283,59 +283,134 @@ fp = fopen(attendanceFileName, "r");
    ========================================= */
 void studentRecord(int loggedInRoll)
 {
-    FILE *fp;
+    FILE *courseFile;
+    FILE *attendanceFile;
+    FILE *studentFile;
+
+    char courseCode[50];
+    char courseName[100];
+    char filename[150];
     char line[500];
 
+    char studentName[100] = "Unknown";
     char name[100];
+
     int roll;
-    int presentCount;
-    int totalClasses;
+    int present;
+    int total;
     float percentage;
 
-    int found = 0;
+    int foundAny = 0;
 
-    fp = fopen("data/attendance.txt", "r");
+    /* Find the student's name */
+    studentFile = fopen("data/student-new.txt", "r");
 
-    if (fp == NULL)
+    if (studentFile != NULL)
     {
-        printf("\nNo attendance records found yet.\n");
+        while (fgets(line, sizeof(line), studentFile) != NULL)
+        {
+            if (sscanf(line, "%99[^,],%d",
+                       name, &roll) == 2)
+            {
+                if (roll == loggedInRoll)
+                {
+                    strcpy(studentName, name);
+                    break;
+                }
+            }
+        }
+
+        fclose(studentFile);
+    }
+
+    printf("\n========================================\n");
+    printf("       MY COURSEWISE ATTENDANCE\n");
+    printf("========================================\n");
+
+    printf("Student Name : %s\n", studentName);
+    printf("Roll Number  : %d\n\n", loggedInRoll);
+
+    printf("%-12s %-35s %8s %7s %12s\n",
+           "Course Code", "Course Name",
+           "Present", "Total", "Attendance");
+
+    printf("--------------------------------------------------------------------------\n");
+
+    /* Read the list of courses */
+    courseFile = fopen("data/courses.txt", "r");
+
+    if (courseFile == NULL)
+    {
+        printf("Error: Could not open data/courses.txt\n");
         return;
     }
 
-    while (fgets(line, sizeof(line), fp) != NULL)
+    while (fgets(line, sizeof(line), courseFile) != NULL)
     {
-        if (sscanf(line,
-                   "%99[^,],%d,%d,%d,%f%%",
-                   name,
-                   &roll,
-                   &presentCount,
-                   &totalClasses,
-                   &percentage) == 5)
+        /* Expected format: course code,course name */
+        if (sscanf(line, "%49[^,],%99[^\r\n]",
+                   courseCode, courseName) != 2)
         {
-            if (roll == loggedInRoll)
+            continue;
+        }
+
+        /* Remove spaces before the course name */
+        while (courseName[0] == ' ')
+        {
+            memmove(courseName, courseName + 1,
+                    strlen(courseName));
+        }
+
+        /* Build the attendance filename */
+        snprintf(filename, sizeof(filename),
+                 "data/%s.txt", courseCode);
+
+        attendanceFile = fopen(filename, "r");
+
+        if (attendanceFile == NULL)
+        {
+            continue;
+        }
+
+        /* Search this course for the logged-in student */
+        while (fgets(line, sizeof(line), attendanceFile) != NULL)
+        {
+            if (sscanf(line, "%99[^,],%d,%d,%d,%f%%",
+                       name, &roll, &present,
+                       &total, &percentage) == 5)
             {
-                printf("\n========================================\n");
-                printf("        MY ATTENDANCE RECORD\n");
-                printf("========================================\n");
+                if (roll == loggedInRoll)
+                {
+                    if (total > 0)
+                    {
+                        percentage =
+                            (float)present * 100.0f / total;
+                    }
+                    else
+                    {
+                        percentage = 0.0f;
+                    }
 
-                printf("\nStudent Name  : %s\n", name);
-                printf("Roll Number   : %d\n", roll);
-                printf("Present       : %d\n", presentCount);
-                printf("Total Classes : %d\n", totalClasses);
-                printf("Attendance    : %.2f%%\n", percentage);
+                    printf("%-12s %-35.35s %8d %7d %11.2f%%\n",
+                           courseCode, courseName,
+                           present, total, percentage);
 
-                printf("========================================\n");
-
-                found = 1;
-                break;
+                    foundAny = 1;
+                    break;
+                }
             }
         }
+
+        fclose(attendanceFile);
     }
 
-    fclose(fp);
+    fclose(courseFile);
 
-    if (!found)
+    if (!foundAny)
     {
-        printf("\nNo attendance record found for your account yet.\n");
+        printf("No course attendance records found for roll %d.\n",
+               loggedInRoll);
     }
+
+    printf("==========================================================================\n");
 }

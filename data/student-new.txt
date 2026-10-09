@@ -29,3 +29,4 @@ MD.Salaudden Kader,118,cse,25-26,kader52507118@stud.kuet.ac.bd,salauudden118
 Progga Banarjee,119,cse,25-26,banarjee52507119@stud.kuet.ac.bd,progga119
 Tahiat Tarannum Urbita,155,cse,25-26,tahiattarannum2007@gmail.com,urbi155
 
+Anannya Ghosh,150,cse,25-26,anannya@gmail.com,anannya150
