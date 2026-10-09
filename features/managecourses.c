@@ -126,6 +126,40 @@ static int findAssignment(const Assignment assignments[],
 
     return -1;
 }
+static int removeCourseAssignment(const char courseCode[])
+{
+    Assignment assignments[MAX_ASSIGNMENTS];
+    int assignmentCount = loadAssignments(assignments);
+    int assignmentIndex = findAssignment(
+        assignments, assignmentCount, courseCode);
+    int i;
+    FILE *file;
+
+    if (assignmentIndex < 0)
+    {
+        return 0;
+    }
+
+    file = fopen("data/course-assignments.txt", "w");
+    if (file == NULL)
+    {
+        printf("Could not update data/course-assignments.txt\n");
+        return 0;
+    }
+
+    for (i = 0; i < assignmentCount; i++)
+    {
+        if (i != assignmentIndex)
+        {
+            fprintf(file, "%s,%s\n",
+                    assignments[i].courseCode,
+                    assignments[i].teacherId);
+        }
+    }
+
+    fclose(file);
+    return 1;
+}
 
 static void assignTeacher(const Course courses[], int courseIndex)
 {
@@ -240,12 +274,34 @@ void manageCourses(void)
         printf("Course password: %s\n", courses[selectedCourse].password);
 
         if (assignmentIndex >= 0)
-        {
-            printf("Status        : Assigned to %s\n",
-                   assignments[assignmentIndex].teacherId);
-            continue;
-        }
+{
+    printf("Status        : Assigned to %s\n",
+           assignments[assignmentIndex].teacherId);
 
+    printf("1. Unassign this course\n");
+    printf("2. Back\n");
+    printf("Choose: ");
+
+    if (scanf("%d", &choice) != 1)
+    {
+        while (getchar() != '\n') {}
+        return;
+    }
+
+    if (choice == 1)
+    {
+        if (removeCourseAssignment(courses[selectedCourse].code))
+        {
+            printf("Course unassigned successfully.\n");
+        }
+        else
+        {
+            printf("Could not unassign the course.\n");
+        }
+    }
+
+    continue;
+}
         printf("Status        : Unassigned\n");
         printf("Assign a teacher? (Y/N): ");
 
