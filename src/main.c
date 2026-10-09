@@ -23,9 +23,7 @@ int studentLogin(int *loggedInRoll);
 void teacherMenu(const char teacherId[]);
 
 
-/* =========================================
-   MAIN
-   ========================================= */
+
 
 int main(void)
 {
@@ -33,12 +31,12 @@ int main(void)
 
     while (1)
     {
-        printf("\n========================================\n");
-        printf("       SMART ATTENDANCE SYSTEM\n");
-        printf("========================================\n");
+        printf("\n\n");
+        printf("\tSMART ATTENDANCE SYSTEM\n");
+        printf("\n");
         printf("1. Login\n");
         printf("2. Exit\n");
-        printf("========================================\n");
+        printf("\n");
         printf("Enter your choice: ");
 
         scanf("%d", &choice);
@@ -63,23 +61,21 @@ int main(void)
 }
 
 
-/* =========================================
-   LOGIN TYPE SELECTION
-   ========================================= */
+// login menu
 
 void login(void)
 {
     int choice;
     int studentRoll;
 
-    printf("\n========================================\n");
-    printf("                 LOGIN\n");
-    printf("========================================\n");
+    printf("\n\n");
+    printf("\tLOGIN\n");
+    printf("\n");
     printf("1. Admin Login\n");
     printf("2. Teacher Login\n");
     printf("3. Student Login\n");
     printf("4. Back\n");
-    printf("========================================\n");
+    printf("\n");
     printf("Enter your choice: ");
 
     scanf("%d", &choice);
@@ -87,18 +83,16 @@ void login(void)
 
     switch (choice)
     {
-        /* ---------------------------------
-           TEACHER LOGIN
-           --------------------------------- */
+        //teacher login
 
         case 2:
         {
             char teacherID[50];
             char password[50];
 
-            printf("\n========================================\n");
-            printf("            TEACHER LOGIN\n");
-            printf("========================================\n");
+            printf("\n\n");
+            printf("\tTEACHER LOGIN\n");
+            printf("\n");
 
             printf("Teacher ID: ");
             fgets(teacherID, sizeof(teacherID), stdin);
@@ -122,9 +116,7 @@ void login(void)
         }
 
 
-        /* ---------------------------------
-           STUDENT LOGIN
-           --------------------------------- */
+       //student login
 
         case 3:
 
@@ -136,18 +128,17 @@ void login(void)
             break;
 
 
-        /* ---------------------------------
-           ADMIN LOGIN
-           --------------------------------- */
+       
+            //admin login
 
         case 1:
         {
             char adminID[50];
             char password[50];
 
-            printf("\n========================================\n");
-            printf("             ADMIN LOGIN\n");
-            printf("========================================\n");
+            printf("\n\n");
+            printf("\tADMIN LOGIN\n");
+            printf("\n");
 
             printf("Admin ID: ");
             fgets(adminID, sizeof(adminID), stdin);
@@ -172,9 +163,6 @@ void login(void)
         }
 
 
-        /* ---------------------------------
-           BACK
-           --------------------------------- */
 
         case 4:
             return;
@@ -184,10 +172,7 @@ void login(void)
     }
 }
 
-
-/* =========================================
-   TEACHER MENU
-   ========================================= */
+// teacher menu
 
 void teacherMenu(const char teacherId[])
 {
@@ -200,10 +185,10 @@ void teacherMenu(const char teacherId[])
 
     while (1)
     {
-        courseCount = getTeacherCourses(
-            teacherId, courseCodes, courseTitles, 100);
+        courseCount = getTeacherCourses( teacherId, courseCodes, courseTitles, 100);
+           
 
-        printf("\n========== YOUR ASSIGNED COURSES ==========\n");
+        printf("\n \tYOUR ASSIGNED COURSES \n");
 
         if (courseCount == 0)
         {
@@ -296,9 +281,7 @@ void teacherMenu(const char teacherId[])
 
 
 
-/* =========================================
-   MANAGE STUDENTS
-   ========================================= */
+// manage students
 
 void manageStudents(void)
 {
@@ -306,13 +289,13 @@ void manageStudents(void)
 
     while (1)
     {
-        printf("\n========================================\n");
-        printf("            MANAGE STUDENTS\n");
-        printf("========================================\n");
+        printf("\n\n");
+        printf("\tMANAGE STUDENTS\n");
+        printf("\n");
         printf("1. New Registration\n");
         printf("2. Delete Registration\n");
         printf("3. Back\n");
-        printf("========================================\n");
+        printf("\n");
         printf("Enter your choice: ");
 
         scanf("%d", &choice);
@@ -338,9 +321,7 @@ void manageStudents(void)
 }
 
 
-/* =========================================
-   ADMIN MENU
-   ========================================= */
+// admin menu
 
 void adminMenu(void)
 {
@@ -348,15 +329,15 @@ void adminMenu(void)
 
     while (1)
     {
-        printf("\n========================================\n");
-        printf("               ADMIN MENU\n");
-        printf("========================================\n");
+        printf("\n\n");
+        printf("\tADMIN MENU\n");
+        printf("\n");
         printf("1. Manage Students\n");
        
         printf("2. Manage Courses\n");
         printf("3. Overall Attendance Record View\n");
         printf("4. Logout\n");
-        printf("========================================\n");
+        printf("\n");
         printf("Enter your choice: ");
 
         scanf("%d", &choice);
@@ -390,9 +371,7 @@ void adminMenu(void)
 }
 
 
-/* =========================================
-   STUDENT MENU
-   ========================================= */
+// student menu
 
 void studentMenu(int studentRoll)
 {
@@ -400,12 +379,12 @@ void studentMenu(int studentRoll)
 
     while (1)
     {
-        printf("\n========================================\n");
-        printf("             STUDENT MENU\n");
-        printf("========================================\n");
+        printf("\n\n");
+        printf("\tSTUDENT MENU\n");
+        printf("\n");
         printf("1. Records\n");
         printf("2. Exit\n");
-        printf("========================================\n");
+        printf("\n");
         printf("Enter your choice: ");
 
         scanf("%d", &choice);
@@ -428,9 +407,7 @@ void studentMenu(int studentRoll)
 }
 
 
-/* =========================================
-   STUDENT LOGIN
-   ========================================= */
+// student login 
 
 int studentLogin(int *loggedInRoll)
 {
@@ -458,9 +435,9 @@ int studentLogin(int *loggedInRoll)
         return 0;
     }
 
-    printf("\n========================================\n");
-    printf("             STUDENT LOGIN\n");
-    printf("========================================\n");
+    printf("\n\n");
+    printf("\tSTUDENT LOGIN\n");
+    printf("\n");
 
     printf("Roll: ");
     scanf("%d", &inputRoll);
@@ -472,13 +449,8 @@ int studentLogin(int *loggedInRoll)
 
     while (fgets(line, sizeof(line), fp) != NULL)
     {
-        /*
-            Format:
-
-            Name,Roll,Department,Session,Email,Password
-        */
-
-        if (sscanf(line,
+           // format-Name,Roll,Department,Session,Email,Password
+         if (sscanf(line,
                    "%99[^,],%d,%99[^,],%99[^,],%99[^,],%99[^\n]",
                    name,
                    &roll,
@@ -503,7 +475,7 @@ int studentLogin(int *loggedInRoll)
     }
 
     fclose(fp);
-
+    
     printf("\nInvalid roll or password!\n");
 
     return 0;
