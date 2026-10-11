@@ -10,13 +10,8 @@
 #define NAME_LENGTH 100
 #define LINE_LENGTH 500
 
-static int save_attendance(
-    const char name[][NAME_LENGTH],
-    const int roll[],
-    const int presentCount[],
-    const int totalClasses[],
-    int studentCount,
-    const char attendanceFileName[])
+static int save_attendance(const char name[][NAME_LENGTH],const int roll[],const int presentCount[],
+    const int totalClasses[],int studentCount,const char attendanceFileName[]) 
 {
     FILE *file = fopen(attendanceFileName, "w");
 
@@ -53,16 +48,16 @@ static int save_attendance(
 }
 
 
-/*
- * Session file format:
- *
- * roll,status
- *
- * status:
- * P = present
- * A = absent
- * U = not yet called
- */
+
+//   Session file format:
+ 
+//   roll,status
+ 
+//   status:
+//   P = present
+//   A = absent
+//   U = not yet called
+ 
 static int save_session(
     const int roll[],
     const char status[],
@@ -98,7 +93,7 @@ void present(const char selectedCourseCode[],
 {
     FILE *studentFile;
     FILE *attendanceFile;
-    FILE *sessionFile;
+    FILE *sessionFile; //for temporary session data
 
     char line[LINE_LENGTH];
 
@@ -119,67 +114,47 @@ void present(const char selectedCourseCode[],
 
     char input;
 
-    /*
-     * Course information
-     */
+    
     char courseCode[50];
     char courseName[100];
 
     char attendanceFileName[150];
     char sessionFileName[150];
 
+// Select course 
+     
 
-    /*
-     * STEP 1:
-     * Select course before doing anything with attendance.
-     */
-
-    printf("\n========================================\n");
-    printf("          COURSE-WISE ATTENDANCE\n");
-    printf("========================================\n");
+    printf("\n\n");
+    printf(" \tCOURSE-WISE ATTENDANCE\n");
+    printf("\n");
 
     
         snprintf(courseCode, sizeof(courseCode), "%s", selectedCourseCode);
         snprintf(courseName, sizeof(courseName), "%s", selectedCourseName);
         
-    
-
-
-    /*
-     * Build the attendance file name.
-     *
-     * Example:
-     * CSE1101 -> ../data/CSE1101.txt
-     */
+       // Build the attendance file name.
+     
 
    snprintf(attendanceFileName,
          sizeof(attendanceFileName),
          "data/%s.txt",
          courseCode);
 
-    /*
-     * Build the session file name.
-     *
-     * Example:
-     * CSE1101 -> ../data/CSE1101-session.txt
-     */
-
-     snprintf(sessionFileName,
+    //Build the session file name.
+     
+         snprintf(sessionFileName,
          sizeof(sessionFileName),
          "data/%s-session.txt",
          courseCode);
 
 
-    printf("\n========================================\n");
+    printf("\n\n");
     printf("Course : %s\n", courseCode);
     printf("Name   : %s\n", courseName);
-    printf("========================================\n");
+    printf("\n");
 
-
-    /*
-     * STEP 2:
-     * Load registered students.
-     */
+     //Load registered students.
+     
 
     studentFile = fopen("data/student-new.txt", "r");
 
@@ -254,7 +229,7 @@ void present(const char selectedCourseCode[],
             {
                 for (i = 0; i < studentCount; i++)
                 {
-                    if (roll[i] == oldRoll)
+                    if (roll[i] == oldRoll) //matches with file's roll
                     {
                         presentCount[i] = oldPresent;
                         totalClasses[i] = oldTotal;
@@ -379,11 +354,11 @@ void present(const char selectedCourseCode[],
      * Start attendance.
      */
 
-    printf("\n========================================\n");
-    printf("           PRESENT CALL\n");
+    printf("\n\n");
+    printf("\tPRESENT CALL\n");
     printf("Course: %s\n", courseCode);
     printf("Enter S at a prompt to stop and save.\n");
-    printf("========================================\n");
+    printf("\n");
 
 
     for (i = 0; i < studentCount; i++)
@@ -515,8 +490,8 @@ void present(const char selectedCourseCode[],
     }
 
 
-    printf("\n========================================\n");
+    printf("\n\n");
     printf("Attendance saved successfully!\n");
     printf("Course: %s\n", courseCode);
-    printf("========================================\n");
+    printf("\n");
 }
