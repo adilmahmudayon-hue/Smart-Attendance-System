@@ -15,9 +15,6 @@ typedef struct
 } AttendanceRecord;
 
 
-/* =========================================
-   OVERALL CLASS ATTENDANCE REPORT
-   ========================================= */
 void overallAttendanceReport(void)
 {
     FILE *fp;
@@ -33,12 +30,10 @@ void overallAttendanceReport(void)
     int count = 0;
     int i, j;
 
-    /*
-        Select a course first
-    */
-    printf("\n========================================\n");
-    printf("       SELECT COURSE FOR REPORT\n");
-    printf("========================================\n");
+    
+    printf("\n\n");
+    printf("\tSELECT COURSE FOR REPORT\n");
+    printf("\n");
 
     if (!selectCourse(courseCode, courseName))
     {
@@ -46,13 +41,6 @@ void overallAttendanceReport(void)
         return;
     }
 
-    /*
-        Course attendance files are stored like:
-
-        data/CSE1101.txt
-        data/CSE1102.txt
-        data/CSE1103.txt
-    */
 
     sprintf(filename, "data/%s.txt", courseCode);
 
@@ -65,24 +53,15 @@ void overallAttendanceReport(void)
         return;
     }
 
-    /*
-        Read attendance records for the selected course
-    */
 
     while (fgets(line, sizeof(line), fp) != NULL)
     {
         if (count >= MAX_STUDENTS)
             break;
 
-        /*
-            Expected format:
+        //Student Name,Roll,Present,Total,Percentage%
 
-            *Student Name,Roll,Present,Total,Percentage%
-
-            Example:
-
-            *Amina Rahman,101,4,5,80.00%
-        */
+    
 
         if (sscanf(line,
                    "%99[^,],%d,%d,%d,%f%%",
@@ -124,9 +103,9 @@ void overallAttendanceReport(void)
         return;
     }
 
-    /*
-        Sort attendance from LOWEST to HIGHEST
-    */
+    
+       // Sort attendance from LOWEST to HIGHEST
+    
 
     for (i = 0; i < count - 1; i++)
     {
@@ -142,28 +121,27 @@ void overallAttendanceReport(void)
         }
     }
 
-    /*
-        Display course-wise report
-    */
+    
+       // Display course-wise report
+    
 
-    printf("\n");
-    printf("====================================================================\n");
-    printf("              OVERALL COURSE ATTENDANCE REPORT\n");
-    printf("====================================================================\n");
+    printf("\n\n");
+    printf("\t\tOVERALL COURSE ATTENDANCE REPORT\n");
+    printf("\n\n");
 
     printf("Course Code : %s\n", courseCode);
     printf("Course Name : %s\n", courseName);
 
-    printf("====================================================================\n");
+    printf("\n\n");
 
-    printf("%-30s %-8s %-10s %-10s %-12s\n",
+    printf("%-30s %-8s %-10s %-10s %-12s\n\n",
            "Student Name",
            "Roll",
            "Present",
            "Classes",
            "Attendance");
 
-    printf("--------------------------------------------------------------------\n");
+    printf("\n");
 
     for (i = 0; i < count; i++)
     {
@@ -175,15 +153,12 @@ void overallAttendanceReport(void)
                students[i].percentage);
     }
 
-    printf("====================================================================\n");
+    printf("\n\n");
 
     printf("\nStudents are sorted from lowest to highest attendance.\n");
 }
 
-
-/* =========================================
-   SEARCH STUDENT RECORD BY ROLL
-   ========================================= */
+//student record by roll search
 void recordForCourse(const char courseCode[])
 {
     FILE *fp;
@@ -200,9 +175,9 @@ void recordForCourse(const char courseCode[])
 
     const float ATTENDANCE_THRESHOLD = 75.0f;
 
-    printf("\n========================================\n");
-    printf("              RECORDS\n");
-    printf("========================================\n");
+    printf("\n\n");
+    printf("\tRECORDS\n");
+    printf("\n");
 
     printf("Enter student roll: ");
     scanf("%d", &searchRoll);
@@ -232,9 +207,9 @@ fp = fopen(attendanceFileName, "r");
         {
             if (roll == searchRoll)
             {
-                printf("\n========================================\n");
-                printf("          STUDENT ATTENDANCE\n");
-                printf("========================================\n");
+                printf("\n\n");
+                printf("\tSTUDENT ATTENDANCE\n");
+                printf("\n");
 
                 printf("\nStudent Name  : %s\n", name);
                 printf("Roll Number   : %d\n", roll);
@@ -242,7 +217,7 @@ fp = fopen(attendanceFileName, "r");
                 printf("Total Classes : %d\n", totalClasses);
                 printf("Attendance    : %.2f%%\n", percentage);
 
-                printf("========================================\n");
+                printf("\n");
 
                 if (percentage < 60.0f)
                 {
@@ -278,9 +253,7 @@ fp = fopen(attendanceFileName, "r");
 }
 
 
-/* =========================================
-   STUDENT'S OWN ATTENDANCE RECORD
-   ========================================= */
+//student's own record
 void studentRecord(int loggedInRoll)
 {
     FILE *courseFile;
@@ -302,7 +275,7 @@ void studentRecord(int loggedInRoll)
 
     int foundAny = 0;
 
-    /* Find the student's name */
+    // Find the student's name 
     studentFile = fopen("data/student-new.txt", "r");
 
     if (studentFile != NULL)
@@ -323,9 +296,8 @@ void studentRecord(int loggedInRoll)
         fclose(studentFile);
     }
 
-    printf("\n========================================\n");
-    printf("       MY COURSEWISE ATTENDANCE\n");
-    printf("========================================\n");
+    printf("\n\tMY COURSEWISE ATTENDANCE\n");
+    printf("\n\n");
 
     printf("Student Name : %s\n", studentName);
     printf("Roll Number  : %d\n\n", loggedInRoll);
@@ -334,9 +306,10 @@ void studentRecord(int loggedInRoll)
            "Course Code", "Course Name",
            "Present", "Total", "Attendance");
 
-    printf("--------------------------------------------------------------------------\n");
+    printf("\n\n");
 
-    /* Read the list of courses */
+    // Read the list of courses 
+    
     courseFile = fopen("data/courses.txt", "r");
 
     if (courseFile == NULL)
@@ -347,21 +320,21 @@ void studentRecord(int loggedInRoll)
 
     while (fgets(line, sizeof(line), courseFile) != NULL)
     {
-        /* Expected format: course code,course name */
+        // Expected format: course code,course name
         if (sscanf(line, "%49[^,],%99[^\r\n]",
                    courseCode, courseName) != 2)
         {
             continue;
         }
 
-        /* Remove spaces before the course name */
+        // Remove spaces before the course name
         while (courseName[0] == ' ')
         {
             memmove(courseName, courseName + 1,
                     strlen(courseName));
         }
 
-        /* Build the attendance filename */
+        // Build the attendance filename
         snprintf(filename, sizeof(filename),
                  "data/%s.txt", courseCode);
 
@@ -372,7 +345,7 @@ void studentRecord(int loggedInRoll)
             continue;
         }
 
-        /* Search this course for the logged-in student */
+        // Search the course 
         while (fgets(line, sizeof(line), attendanceFile) != NULL)
         {
             if (sscanf(line, "%99[^,],%d,%d,%d,%f%%",
@@ -412,5 +385,5 @@ void studentRecord(int loggedInRoll)
                loggedInRoll);
     }
 
-    printf("==========================================================================\n");
+    printf("\n");
 }
