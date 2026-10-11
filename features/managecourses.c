@@ -26,7 +26,7 @@ typedef struct
     char teacherId[50];
 } Assignment;
 
-static int loadCourses(Course courses[])
+static int loadCourses(Course courses[])  //  course list
 {
     FILE *file = fopen("data/courses.txt", "r");
     char line[300];
@@ -42,20 +42,18 @@ static int loadCourses(Course courses[])
     {
         line[strcspn(line, "\r\n")] = '\0';
 
-        if (sscanf(line, "%49[^,],%99[^,],%99[^\r\n]",
-                   courses[count].code,
-                   courses[count].title,
-                   courses[count].password) == 3)
-        {
-            count++;
-        }
+        if (sscanf(line, "%49[^,],%99[^,],%99[^\r\n]",courses[count].code,courses[count].title, courses[count].password) == 3)
+                   
+              count++;     
+                  
+        
     }
 
     fclose(file);
     return count;
 }
 
-static int loadTeachers(Teacher teachers[])
+static int loadTeachers(Teacher teachers[])   // teacher list
 {
     FILE *file = fopen("data/teacher.txt", "r");
     char line[200];
@@ -71,12 +69,10 @@ static int loadTeachers(Teacher teachers[])
     {
         line[strcspn(line, "\r\n")] = '\0';
 
-        if (sscanf(line, "%49[^,], %99[^\r\n]",
-                   teachers[count].id,
-                   teachers[count].password) == 2)
-        {
-            count++;
-        }
+        if (sscanf(line, "%49[^,], %99[^\r\n]", teachers[count].id,teachers[count].password) == 2)
+                  
+               count++;    
+       
     }
 
     fclose(file);
@@ -98,25 +94,20 @@ static int loadAssignments(Assignment assignments[])
     {
         line[strcspn(line, "\r\n")] = '\0';
 
-        if (sscanf(line, "%49[^,],%49[^\r\n]",
-                   assignments[count].courseCode,
-                   assignments[count].teacherId) == 2)
-        {
-            count++;
-        }
+        if (sscanf(line, "%49[^,],%49[^\r\n]", assignments[count].courseCode,assignments[count].teacherId) == 2)
+                  
+               count++;     
+       
     }
 
     fclose(file);
     return count;
 }
 
-static int findAssignment(const Assignment assignments[],
-                          int assignmentCount,
-                          const char courseCode[])
+static int findAssignment(const Assignment assignments[], int assignmentCount,const char courseCode[])   // assign couses
+                                                  
 {
-    int i;
-
-    for (i = 0; i < assignmentCount; i++)
+      for (int i = 0; i < assignmentCount; i++)
     {
         if (strcmp(assignments[i].courseCode, courseCode) == 0)
         {
@@ -126,12 +117,13 @@ static int findAssignment(const Assignment assignments[],
 
     return -1;
 }
-static int removeCourseAssignment(const char courseCode[])
+
+static int removeCourseAssignment(const char courseCode[])   // unassign course
 {
     Assignment assignments[MAX_ASSIGNMENTS];
     int assignmentCount = loadAssignments(assignments);
-    int assignmentIndex = findAssignment(
-        assignments, assignmentCount, courseCode);
+    int assignmentIndex = findAssignment( assignments, assignmentCount, courseCode);
+       
     int i;
     FILE *file;
 
@@ -151,9 +143,9 @@ static int removeCourseAssignment(const char courseCode[])
     {
         if (i != assignmentIndex)
         {
-            fprintf(file, "%s,%s\n",
-                    assignments[i].courseCode,
-                    assignments[i].teacherId);
+            fprintf(file, "%s,%s\n", assignments[i].courseCode,   assignments[i].teacherId);
+                   
+                 
         }
     }
 
@@ -184,15 +176,15 @@ static void assignTeacher(const Course courses[], int courseIndex)
         return;
     }
 
-    printf("\n========== TEACHERS ==========\n");
+    printf("\n\t TEACHERS \n");
     for (i = 0; i < teacherCount; i++)
     {
         printf("%d. %s\n", i + 1, teachers[i].id);
     }
 
     printf("Choose a teacher number: ");
-    if (scanf("%d", &choice) != 1 ||
-        choice < 1 || choice > teacherCount)
+    if (scanf("%d", &choice) != 1 ||choice < 1 || choice > teacherCount)
+        
     {
         printf("Invalid teacher choice.\n");
         return;
@@ -205,14 +197,14 @@ static void assignTeacher(const Course courses[], int courseIndex)
         return;
     }
 
-    fprintf(file, "%s,%s\n",
-            courses[courseIndex].code,
-            teachers[choice - 1].id);
+    fprintf(file, "%s,%s\n", courses[courseIndex].code, teachers[choice - 1].id);
+           
+           
     fclose(file);
 
-    printf("%s assigned to %s.\n",
-           teachers[choice - 1].id,
-           courses[courseIndex].code);
+    printf("%s assigned to %s.\n", teachers[choice - 1].id, courses[courseIndex].code);
+          
+          
 }
 
 void manageCourses(void)
@@ -238,11 +230,11 @@ void manageCourses(void)
             return;
         }
 
-        printf("\n========== MANAGE COURSES ==========\n");
+        printf("\n\t MANAGE COURSES \n");
         for (i = 0; i < courseCount; i++)
         {
-            printf("%d. %s - %s\n",
-                   i + 1, courses[i].code, courses[i].title);
+            printf("%d. %s - %s\n",i + 1, courses[i].code, courses[i].title);
+                   
         }
         printf("%d. Back\n", courseCount + 1);
         printf("Choose a course: ");
@@ -266,8 +258,8 @@ void manageCourses(void)
 
         selectedCourse = choice - 1;
         assignmentCount = loadAssignments(assignments);
-        assignmentIndex = findAssignment(
-            assignments, assignmentCount, courses[selectedCourse].code);
+        assignmentIndex = findAssignment(assignments, assignmentCount, courses[selectedCourse].code);
+            
 
         printf("\nCourse number : %s\n", courses[selectedCourse].code);
         printf("Course title  : %s\n", courses[selectedCourse].title);
@@ -275,9 +267,7 @@ void manageCourses(void)
 
         if (assignmentIndex >= 0)
 {
-    printf("Status        : Assigned to %s\n",
-           assignments[assignmentIndex].teacherId);
-
+    printf("Status\t: Assigned to %s\n", assignments[assignmentIndex].teacherId);      
     printf("1. Unassign this course\n");
     printf("2. Back\n");
     printf("Choose: ");
@@ -302,7 +292,7 @@ void manageCourses(void)
 
     continue;
 }
-        printf("Status        : Unassigned\n");
+        printf("Status\t: Unassigned\n");
         printf("Assign a teacher? (Y/N): ");
 
         if (scanf(" %c", &answer) != 1)
@@ -327,7 +317,7 @@ void showTeacherCourses(const char teacherId[])
     int i, j;
     int found = 0;
 
-    printf("\n========== YOUR ASSIGNED COURSES ==========\n");
+    printf("\n\t YOUR ASSIGNED COURSES \n");
 
     for (i = 0; i < assignmentCount; i++)
     {
@@ -348,15 +338,15 @@ void showTeacherCourses(const char teacherId[])
         }
     }
 
-    if (!found)
+    if (found==0)
     {
         printf("No courses are assigned to you yet.\n");
     }
 }
 
-int authenticateTeacher(const char teacherId[],
-                        const char password[],
-                        size_t teacherIdSize)
+int authenticateTeacher(const char teacherId[], const char password[], size_t teacherIdSize)
+                       
+                       
 {
     Teacher teachers[MAX_TEACHERS];
     int teacherCount = loadTeachers(teachers);
