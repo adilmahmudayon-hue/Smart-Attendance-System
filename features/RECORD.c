@@ -93,9 +93,7 @@ void overallAttendanceReport(void)
 
     fclose(fp);
 
-    /*
-        No records found
-    */
+   
 
     if (count == 0)
     {

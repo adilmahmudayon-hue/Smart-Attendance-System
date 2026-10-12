@@ -29,10 +29,9 @@ static int save_attendance(const char name[][NAME_LENGTH],const int roll[],const
 
         if (totalClasses[i] > 0)
         {
-            percentage =
-                ((float)presentCount[i] / totalClasses[i]) * 100.0f;
-        }
-
+            percentage =((float)presentCount[i] / totalClasses[i]) * 100.0f;
+        }        
+        
         fprintf(file,
                 "%s,%d,%d,%d,%.2f%%\n",
                 name[i],
@@ -48,11 +47,7 @@ static int save_attendance(const char name[][NAME_LENGTH],const int roll[],const
 }
 
 
-
-//   Session file format:
- 
-//   roll,status
- 
+//   Session file format: roll, status
 //   status:
 //   P = present
 //   A = absent
@@ -66,15 +61,13 @@ static int save_session(
 {
     FILE *file = fopen(sessionFileName, "w");
 
-    int i;
-
     if (file == NULL)
     {
         printf("\nError: Could not save the attendance session.\n");
         return 0;
     }
 
-    for (i = 0; i < studentCount; i++)
+    for (int i = 0; i < studentCount; i++)
     {
         fprintf(file,
                 "%d,%c\n",
@@ -106,8 +99,7 @@ void present(const char selectedCourseCode[],
 
     char status[MAX_STUDENTS];
 
-    int studentCount = 0;
-    int i;
+    int studentCount = 0,i;
 
     int hasUnfinishedSession = 0;
     int choice;
@@ -123,7 +115,6 @@ void present(const char selectedCourseCode[],
 
 // Select course 
      
-
     printf("\n\n");
     printf(" \tCOURSE-WISE ATTENDANCE\n");
     printf("\n");
@@ -165,12 +156,8 @@ void present(const char selectedCourseCode[],
     }
 
 
-    /*
-     * Registration format:
-     *
-     * Name,Roll,Department,Session,Email,Password
-     */
-
+    // Registration format:Name,Roll,Department,Session,Email,Password
+    
     while (fgets(line, sizeof(line), studentFile) != NULL &&
            studentCount < MAX_STUDENTS)
     {
@@ -193,9 +180,7 @@ void present(const char selectedCourseCode[],
     }
 
 
-    /*
-     * Initially nobody has been called.
-     */
+    // initially everyone is uncalled
 
     for (i = 0; i < studentCount; i++)
     {
@@ -203,10 +188,8 @@ void present(const char selectedCourseCode[],
     }
 
 
-    /*
-     * STEP 3:
-     * Load cumulative attendance for THIS COURSE ONLY.
-     */
+     //Load cumulative attendance for this course only
+     
 
     attendanceFile = fopen(attendanceFileName, "r");
 
@@ -244,10 +227,8 @@ void present(const char selectedCourseCode[],
     }
 
 
-    /*
-     * STEP 4:
-     * Check whether THIS COURSE has an unfinished session.
-     */
+     // Check whether this course has an unfinished session.
+    
 
     sessionFile = fopen(sessionFileName, "r");
 
@@ -258,10 +239,8 @@ void present(const char selectedCourseCode[],
 
         while (fgets(line, sizeof(line), sessionFile) != NULL)
         {
-            if (sscanf(line,
-                       "%d,%c",
-                       &oldRoll,
-                       &oldStatus) == 2)
+            if (sscanf(line,"%d,%c",&oldRoll,&oldStatus) == 2)
+                                 
             {
                 for (i = 0; i < studentCount; i++)
                 {
@@ -281,26 +260,23 @@ void present(const char selectedCourseCode[],
         fclose(sessionFile);
 
 
-        /*
-         * Check if anyone is still unmarked.
-         */
-
+        
+         // Check if anyone is still unmarked.
+        
         for (i = 0; i < studentCount; i++)
         {
             if (status[i] == 'U')
             {
                 hasUnfinishedSession = 1;
-
                 break;
             }
         }
     }
 
 
-    /*
-     * STEP 5:
-     * Ask whether to continue unfinished attendance.
-     */
+
+     // Ask whether to continue unfinished attendance.
+     
 
     if (hasUnfinishedSession)
     {
@@ -334,10 +310,10 @@ void present(const char selectedCourseCode[],
                 status[i] = 'U';
             }
 
-            /*
-             * Starting a new session.
-             * Previous partial session is replaced as students are marked.
-             */
+           
+             // Starting a new session.
+             // Previous partial session is replaced as students are marked.
+             
 
         }
         else
@@ -349,10 +325,8 @@ void present(const char selectedCourseCode[],
     }
 
 
-    /*
-     * STEP 6:
-     * Start attendance.
-     */
+     // Start taking attendance.
+ 
 
     printf("\n\n");
     printf("\tPRESENT CALL\n");
@@ -394,17 +368,12 @@ void present(const char selectedCourseCode[],
         input = (char)toupper((unsigned char)input);
 
 
-        /*
-         * Stop attendance.
-         */
+         // Stop attendance.
+        
 
         if (input == 'S')
         {
-            save_session(
-                roll,
-                status,
-                studentCount,
-                sessionFileName);
+            save_session(roll,status,studentCount,sessionFileName);    
 
             printf("\nAttendance session saved.\n");
             printf("Course: %s\n", courseCode);
@@ -413,10 +382,6 @@ void present(const char selectedCourseCode[],
             return;
         }
 
-
-        /*
-         * Invalid input.
-         */
 
         if (input != 'P' && input != 'A')
         {
@@ -428,9 +393,9 @@ void present(const char selectedCourseCode[],
         }
 
 
-        /*
-         * Store the attendance status.
-         */
+        
+         // Storing the attendance status.
+        
 
         status[i] = input;
 
@@ -442,14 +407,8 @@ void present(const char selectedCourseCode[],
             presentCount[i]++;
         }
 
-
-        /*
-         * Save after every answer.
-         *
-         * This protects the attendance data if the
-         * program closes unexpectedly.
-         */
-
+//saves after every call which protects the data if suddenly program is off
+        
         if (!save_attendance(
                 name,
                 roll,
@@ -476,13 +435,10 @@ void present(const char selectedCourseCode[],
                input == 'P' ? "Present" : "Absent");
     }
 
-
-    /*
-     * STEP 7:
-     * All students have been called.
-     *
-     * Remove the course-specific unfinished session file.
-     */
+    
+     // All students have been called.
+     
+     // Remove the course-specific unfinished session file.
 
     if (remove(sessionFileName) != 0)
     {
