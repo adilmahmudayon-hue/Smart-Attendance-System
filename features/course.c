@@ -48,9 +48,9 @@ int selectCourse(char courseCode[], char courseName[])
         return 0;
     }
 
-    printf("\n========================================\n");
-    printf("              SELECT COURSE\n");
-    printf("========================================\n");
+    printf("\n\n");
+    printf("\t SELECT COURSE\n");
+    printf("\n");
 
     for (int i = 0; i < count; i++)
     {
@@ -60,7 +60,7 @@ int selectCourse(char courseCode[], char courseName[])
                names[i]);
     }
 
-    printf("========================================\n");
+    printf("\n");
 
     printf("Enter course number: ");
 
