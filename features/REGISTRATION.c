@@ -18,23 +18,17 @@ void regi(void)
 
     char line[500];
 
-    printf("\n========================================\n");
-    printf("           NEW REGISTRATION\n");
-    printf("========================================\n");
+    printf("\n\n");
+    printf("\tNEW REGISTRATION\n");
+    printf("\n");
 
-    /* ================================
-       STUDENT NAME
-       ================================ */
-
+  
     printf("Enter student name: ");
 
     fgets(name, sizeof(name), stdin);
     name[strcspn(name, "\n")] = '\0';
 
-    /* ================================
-       STUDENT ROLL
-       ================================ */
-
+   
     printf("Enter roll: ");
 
     if (scanf("%d", &roll) != 1)
@@ -48,9 +42,9 @@ void regi(void)
 
     while (getchar() != '\n');
 
-    /* ================================
-       DUPLICATE ROLL CHECK
-       ================================ */
+    
+      //duplicate roll check
+       
 
     checkFile = fopen("data/student-new.txt", "r");
 
@@ -58,19 +52,18 @@ void regi(void)
     {
         while (fgets(line, sizeof(line), checkFile) != NULL)
         {
-            /*
-               File format:
-               name,roll,department,session,email,password
-            */
+           
+              // File format:name,roll,department,session,email,password
+           
 
             if (sscanf(line, "%*99[^,],%d", &existingRoll) == 1)
             {
                 if (existingRoll == roll)
                 {
-                    printf("\n========================================\n");
+                    printf("\n\n");
                     printf("ERROR: Roll number %d already exists!\n", roll);
                     printf("Registration rejected.\n");
-                    printf("========================================\n");
+                    printf("\n");
 
                     fclose(checkFile);
                     return;
@@ -81,47 +74,28 @@ void regi(void)
         fclose(checkFile);
     }
 
-    /* ================================
-       DEPARTMENT
-       ================================ */
 
     printf("Enter department: ");
 
     fgets(dept, sizeof(dept), stdin);
     dept[strcspn(dept, "\n")] = '\0';
 
-    /* ================================
-       SESSION
-       ================================ */
-
     printf("Enter session: ");
 
     fgets(session, sizeof(session), stdin);
     session[strcspn(session, "\n")] = '\0';
-
-    /* ================================
-       EMAIL
-       ================================ */
 
     printf("Enter student email: ");
 
     fgets(stu_email, sizeof(stu_email), stdin);
     stu_email[strcspn(stu_email, "\n")] = '\0';
 
-    /* ================================
-       PASSWORD
-       ================================ */
-
     printf("Create student password: ");
 
     fgets(password, sizeof(password), stdin);
     password[strcspn(password, "\n")] = '\0';
 
-    /* ================================
-       SAVE STUDENT
-       ================================ */
-
-    fp = fopen("data/student-new.txt", "a");
+   fp = fopen("data/student-new.txt", "a");
 
     if (fp == NULL)
     {
@@ -140,13 +114,11 @@ void regi(void)
 
     fclose(fp);
 
-    /* ================================
-       SUCCESS MESSAGE
-       ================================ */
+  
 
-    printf("\n========================================\n");
+    printf("\n\n");
     printf("Student registered successfully!\n");
-    printf("========================================\n");
+    printf("\n");
 
     printf("Student Name  : %s\n", name);
     printf("Student Roll  : %d\n", roll);
@@ -157,8 +129,12 @@ void regi(void)
     printf("\nStudent can now login using:\n");
     printf("Roll + Password\n");
 
-    printf("========================================\n");
+    printf("\n\n");
 }
+
+//delete registration function
+
+
 void deleteRegistration(void)
 {
     FILE *fp;
@@ -186,9 +162,9 @@ void deleteRegistration(void)
         return;
     }
 
-    printf("\n========================================\n");
-    printf("          DELETE REGISTRATION\n");
-    printf("========================================\n");
+    printf("\n\n");
+    printf("\tDELETE REGISTRATION\n");
+    printf("\n");
 
     printf("Enter student roll to delete: ");
 
@@ -208,16 +184,14 @@ void deleteRegistration(void)
     while (getchar() != '\n');
 
     /*
-        Read every student from the original file.
         If the roll matches, skip that student.
         Otherwise, copy the student to the temporary file.
     */
 
     while (fgets(line, sizeof(line), fp) != NULL)
     {
-        if (sscanf(line,
-                   "%*99[^,],%d",
-                   &roll) == 1)
+        if (sscanf(line,"%*99[^,],%d", &roll) == 1)
+                  
         {
             if (roll == rollToDelete)
             {
@@ -232,13 +206,13 @@ void deleteRegistration(void)
     fclose(fp);
     fclose(tempFile);
 
-    if (!found)
+    if (found==0)
     {
         remove("data/student-temp.txt");
 
-        printf("\n========================================\n");
+        printf("\n\n");
         printf("No student found with roll %d.\n", rollToDelete);
-        printf("========================================\n");
+        printf("\n");
 
         return;
     }
@@ -250,15 +224,15 @@ void deleteRegistration(void)
 
     remove("data/student-new.txt");
 
-    if (rename("data/student-temp.txt",
-               "data/student-new.txt") != 0)
+    if (rename("data/student-temp.txt","data/student-new.txt") != 0)
+               
     {
         printf("\nError: Could not update student file.\n");
         return;
     }
 
-    printf("\n========================================\n");
+    printf("\n\n");
     printf("Registration deleted successfully!\n");
     printf("Deleted student roll: %d\n", rollToDelete);
-    printf("========================================\n");
+    printf("\n");
 }
