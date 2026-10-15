@@ -19,3 +19,39 @@ bash
 Copy
 git checkout main
 git pull origin main
+
+
+// to compile and run in terminal
+
+
+All commands in order
+1. Open PowerShell
+
+Press Win + X → select Terminal or Windows PowerShell.
+
+2. Go to your project folder
+cd "C:\Users\DELL\Desktop\CSE 1102 project"
+
+3. Check that you are in the correct folder
+pwd
+
+Expected path:
+
+C:\Users\DELL\Desktop\CSE 1102 project
+4. Check GCC installation
+gcc --version
+
+You only need to check this when setting up or troubleshooting your compiler.
+
+5. Compile your entire project
+
+Run this command after changing and saving your C code:
+
+gcc src/main.c features/REGISTRATION.c features/present.c features/RECORD.c features/course.c features/managecourses.c -Ifeatures -o attendance.exe
+
+If there are no errors, compilation succeeded.
+
+6. Run your project
+.\attendance.exe
+
+Your application should open in the terminal.
