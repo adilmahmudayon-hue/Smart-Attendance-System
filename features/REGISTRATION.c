@@ -18,6 +18,19 @@ void regi(void)
 
     char line[500];
 
+    struct StudentLine
+    {
+    int roll;
+    char data[500];
+    };
+
+    struct StudentLine students[1000];
+    struct StudentLine temp;
+
+    int count = 0;
+    int i, j;
+    int savedRoll;
+
     printf("\n\n");
     printf("\tNEW REGISTRATION\n");
     printf("\n");
@@ -95,26 +108,79 @@ void regi(void)
     fgets(password, sizeof(password), stdin);
     password[strcspn(password, "\n")] = '\0';
 
-   fp = fopen("data/student-new.txt", "a");
+    /* Read existing student records */
+fp = fopen("data/student-new.txt", "r");
 
-    if (fp == NULL)
+if (fp != NULL)
+{
+    while (fgets(line, sizeof(line), fp) != NULL)
     {
-        printf("\nError: Could not open student file.\n");
-        return;
+        if (count >= 999)
+        {
+            printf("\nError: Student storage limit reached.\n");
+            fclose(fp);
+            return;
+        }
+
+        if (sscanf(line, "%*99[^,],%d", &savedRoll) == 1)
+        {
+            students[count].roll = savedRoll;
+
+            strcpy(students[count].data, line);
+
+            if (strchr(students[count].data, '\n') == NULL)
+            {
+                strcat(students[count].data, "\n");
+            }
+
+            count++;
+        }
     }
 
-    fprintf(fp,
-            "%s,%d,%s,%s,%s,%s\n",
-            name,
-            roll,
-            dept,
-            session,
-            stu_email,
-            password);
-
     fclose(fp);
+}
 
-  
+// Add the new student 
+students[count].roll = roll;
+
+snprintf(
+    students[count].data,
+    sizeof(students[count].data),
+    "%s,%d,%s,%s,%s,%s\n",
+    name, roll, dept, session, stu_email, password
+);
+
+count++;
+
+//Sort by roll number, smallest to largest 
+for (i = 0; i < count - 1; i++)
+{
+    for (j = 0; j < count - 1 - i; j++)
+    {
+        if (students[j].roll > students[j + 1].roll)
+        {
+            temp = students[j];
+            students[j] = students[j + 1];
+            students[j + 1] = temp;
+        }
+    }
+}
+
+// Rewrite the student file in sorted order
+fp = fopen("data/student-new.txt", "w");
+
+if (fp == NULL)
+{
+    printf("\nError: Could not update student file.\n");
+    return;
+}
+
+for (i = 0; i < count; i++)
+{
+    fputs(students[i].data, fp);
+}
+
+fclose(fp);
 
     printf("\n\n");
     printf("Student registered successfully!\n");

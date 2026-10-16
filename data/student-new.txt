@@ -1,3 +1,4 @@
+Anannya Ghosh,55,cse,25-26,ghuvsdhb@mail.com,anannya055
 Mitaly Farzana,091,cse,25-26,farzana52507091@stud.kuet.ac.bd,mitaly091
 MD. Nafis Hasan Pranto,092,cse,25-26,pranto52507092@stud.kuet.ac.bd,nafis092
 Muhtadi Yashar,093,cse,25-26,yashar52507093@stud.kuet.ac.bd,mutadi093
@@ -27,4 +28,3 @@ Swapnil Adhikary,116,cse,25-26,adhikary52507116@stud.kuet.ac.bd,swapnil116
 Sabik Ahmed Saad,117,cse,25-26,saad52507117@stud.kuet.ac.bd,sabik117
 MD.Salaudden Kader,118,cse,25-26,kader52507118@stud.kuet.ac.bd,salauudden118
 Progga Banarjee,119,cse,25-26,banarjee52507119@stud.kuet.ac.bd,progga119
-
