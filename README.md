@@ -212,21 +212,6 @@ Attendance data is stored using course-specific files, keeping records for diffe
 
 **The student experience is a separate role-based menu inside the console application.** It is not a separate web application.
 
-### Student workflow
-
-```mermaid
-flowchart TD
-    A([Start]) --> B[Student Login]
-    B --> C{Authentication Valid?}
-    C -- No --> B
-    C -- Yes --> D[Student Menu]
-    D --> E[Records]
-    E --> F[Read Course-Wise Attendance]
-    F --> G[Display Attendance Report]
-    G --> D
-    D --> H([Exit])
-```
-
 ### Student menu
 
 ```text
@@ -258,27 +243,36 @@ STUDENT MENU
 The student report uses the logged-in student's identity to display their records, rather than requiring them to choose another student's roll number.
 
 ---
-
 ## 📊 Attendance Calculation
 
-Attendance percentage is calculated using the following formula:
+The system calculates a student's attendance percentage for each course using the number of classes attended and the total number of classes held.
+
+**Formula:**
 
 $$
-\text{Attendance Percentage}
-=
-\frac{\text{Classes Attended}}{\text{Total Classes}}
-\times 100
+\text{Attendance Percentage} =
+\frac{\text{Classes Attended}}{\text{Total Classes Held}} \times 100
 $$
 
-For example, if a student attends 2 out of 3 classes:
+**Example:** If a student attends 2 out of 3 classes:
 
 $$
 \frac{2}{3}\times100=66.67\%
 $$
 
-A **75% attendance threshold** is used for low-attendance indications where implemented. The calculation must also account for cases where no classes have been recorded to avoid division by zero.
+| Classes Attended | Total Classes Held | Attendance Percentage |
+| ---------------: | -----------------: | --------------------: |
+|                5 |                  5 |               100.00% |
+|                2 |                  3 |                66.67% |
+|                0 |                  1 |                 0.00% |
 
----
+**Important considerations:**
+
+* Attendance is calculated separately for each course.
+* The total number of classes must be greater than zero before performing the division.
+* The percentage should be calculated from the stored attendance counts, rather than adding or averaging previously calculated percentages.
+* A 75% threshold may be used to identify low attendance where that warning feature is implemented.
+
 
 ## 🗂️ Project Structure
 
