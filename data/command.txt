@@ -55,3 +55,21 @@ If there are no errors, compilation succeeded.
 .\attendance.exe
 
 Your application should open in the terminal.
+
+// to run using makefile
+
+
+Step 6: Use it
+
+From the project folder:
+
+mingw32-make //This compiles everything and creates attendance.exe.
+
+
+
+mingw32-make run // This compiles (if needed) and starts the program.
+
+
+
+mingw32-make clean // This deletes the .exe.
+
