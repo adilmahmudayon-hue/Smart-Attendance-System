@@ -9,17 +9,52 @@
 #define MAX_STUDENTS 100
 #define NAME_LENGTH 100
 #define LINE_LENGTH 500
+#define COMMENT_LENGTH 300
 
-static int save_attendance(const char name[][NAME_LENGTH],const int roll[],const int presentCount[],
-    const int totalClasses[],int studentCount,const char attendanceFileName[]) 
+
+static void extract_comment(const char line[],
+                           char comment[],
+                           int size)
+{
+    const char *p = line;
+    int commas = 0;
+
+    comment[0] = '\0';
+
+    while (*p != '\0' && commas < 5)
+    {
+        if (*p == ',')
+        {
+            commas++;
+        }
+
+        p++;
+    }
+
+    if (commas == 5)
+    {
+        snprintf(comment, size, "%s", p);
+        comment[strcspn(comment, "\r\n")] = '\0';
+    }
+}
+
+
+
+static int save_attendance(
+    const char name[][NAME_LENGTH],
+    const int roll[],
+    const int presentCount[],
+    const int totalClasses[],
+    const char comments[][COMMENT_LENGTH],
+    int studentCount,
+    const char attendanceFileName[])
 {
     FILE *file = fopen(attendanceFileName, "w");
-
     int i;
 
     if (file == NULL)
     {
-        printf("\nError: Could not save attendance.\n");
+        printf("\nCould not save attendance.\n");
         return 0;
     }
 
@@ -29,20 +64,27 @@ static int save_attendance(const char name[][NAME_LENGTH],const int roll[],const
 
         if (totalClasses[i] > 0)
         {
-            percentage =((float)presentCount[i] / totalClasses[i]) * 100.0f;
-        }        
-        
-        fprintf(file,
-                "%s,%d,%d,%d,%.2f%%\n",
-                name[i],
-                roll[i],
-                presentCount[i],
-                totalClasses[i],
-                percentage);
+            percentage =
+                ((float)presentCount[i] / totalClasses[i]) * 100.0f;
+        }
+
+        if (comments[i][0] != '\0')
+        {
+            fprintf(file, "%s,%d,%d,%d,%.2f%%,%s\n",
+                    name[i], roll[i],
+                    presentCount[i], totalClasses[i],
+                    percentage, comments[i]);
+        }
+        else
+        {
+            fprintf(file, "%s,%d,%d,%d,%.2f%%\n",
+                    name[i], roll[i],
+                    presentCount[i], totalClasses[i],
+                    percentage);
+        }
     }
 
     fclose(file);
-
     return 1;
 }
 
@@ -96,6 +138,7 @@ void present(const char selectedCourseCode[],
 
     int presentCount[MAX_STUDENTS] = {0};
     int totalClasses[MAX_STUDENTS] = {0};
+    char comments[MAX_STUDENTS][COMMENT_LENGTH] = {{0}};
 
     char status[MAX_STUDENTS];
 
@@ -216,6 +259,7 @@ void present(const char selectedCourseCode[],
                     {
                         presentCount[i] = oldPresent;
                         totalClasses[i] = oldTotal;
+                         extract_comment(line, comments[i], COMMENT_LENGTH);
 
                         break;
                     }
@@ -414,6 +458,7 @@ void present(const char selectedCourseCode[],
                 roll,
                 presentCount,
                 totalClasses,
+                comments,
                 studentCount,
                 attendanceFileName) ||
 

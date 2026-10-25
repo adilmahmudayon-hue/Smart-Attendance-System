@@ -4,7 +4,7 @@ Muhtadi Yashar,93,1,1,100.00%
 Tahsin Hossain Chowdhury,94,1,1,100.00%
 Md. Robius Suny Refat,95,1,1,100.00%
 Rahib Abid,96,1,1,100.00%
-Antora Ghosh,97,1,1,100.00%
+Antora Ghosh,97,1,1,100.00%,Good
 Iftekharun Kabir Chowdhury Nice,98,0,1,0.00%
 Mithila Chowdhury Ritu,99,0,1,0.00%
 S.M. TANZIM SIDDIQUE,100,0,1,0.00%

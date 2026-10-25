@@ -1,4 +1,3 @@
-Anannya Ghosh,55,cse,25-26,ghuvsdhb@mail.com,anannya055
 Mitaly Farzana,091,cse,25-26,farzana52507091@stud.kuet.ac.bd,mitaly091
 MD. Nafis Hasan Pranto,092,cse,25-26,pranto52507092@stud.kuet.ac.bd,nafis092
 Muhtadi Yashar,093,cse,25-26,yashar52507093@stud.kuet.ac.bd,mutadi093

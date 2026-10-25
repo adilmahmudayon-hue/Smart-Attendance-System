@@ -12,7 +12,32 @@ typedef struct
     int presentCount;
     int totalClasses;
     float percentage;
+    char comment[300];
 } AttendanceRecord;
+ void getTeacherComment(const char line[], char comment[], int size)
+{
+    const char *p = line;
+    int commas = 0;
+
+    comment[0] = '\0';
+
+    while (*p != '\0' && commas < 5)
+    {
+        if (*p == ',')
+        {
+            commas++;
+        }
+
+        p++;
+    }
+
+    if (commas == 5)
+    {
+        snprintf(comment, size, "%s", p);
+
+        comment[strcspn(comment, "\r\n")] = '\0';
+    }
+}
 
 
 void overallAttendanceReport(void)
@@ -157,35 +182,28 @@ void overallAttendanceReport(void)
 }
 
 //student record by roll search
+
 void recordForCourse(const char courseCode[])
 {
     FILE *fp;
-    char line[500];
-
-    int searchRoll;
-    int found = 0;
-
+    char filename[150];
+    char line[600];
+    char lines[MAX_STUDENTS][600];
+    char comment[300];
     char name[100];
+
     int roll;
-    int presentCount;
-    int totalClasses;
+    int present;
+    int total;
     float percentage;
+    int searchRoll;
+    int count = 0;
+    int found = -1;
+    int i;
 
-    const float ATTENDANCE_THRESHOLD = 75.0f;
+    snprintf(filename, sizeof(filename), "data/%s.txt", courseCode);
 
-    printf("\n\n");
-    printf("\tRECORDS\n");
-    printf("\n");
-
-    printf("Enter student roll: ");
-    scanf("%d", &searchRoll);
-
-    char attendanceFileName[150];
-
-snprintf(attendanceFileName, sizeof(attendanceFileName),
-         "data/%s.txt", courseCode);
-
-fp = fopen(attendanceFileName, "r");
+    fp = fopen(filename, "r");
 
     if (fp == NULL)
     {
@@ -193,65 +211,112 @@ fp = fopen(attendanceFileName, "r");
         return;
     }
 
-    while (fgets(line, sizeof(line), fp) != NULL)
+    while (count < MAX_STUDENTS &&
+           fgets(lines[count], sizeof(lines[count]), fp) != NULL)
     {
-        if (sscanf(line,
-                   "%99[^,],%d,%d,%d,%f%%",
-                   name,
-                   &roll,
-                   &presentCount,
-                   &totalClasses,
-                   &percentage) == 5)
+        count++;
+    }
+
+    fclose(fp);
+
+    printf("\n\tSTUDENT ATTENDANCE RECORDS\n");
+    printf("Enter student roll: ");
+
+    if (scanf("%d", &searchRoll) != 1)
+    {
+        while (getchar() != '\n' && !feof(stdin))
+        {
+        }
+
+        printf("Invalid roll number.\n");
+        return;
+    }
+
+    while (getchar() != '\n' && !feof(stdin))
+    {
+    }
+
+    for (i = 0; i < count; i++)
+    {
+        if (sscanf(lines[i], "%99[^,],%d,%d,%d,%f%%",
+                   name, &roll, &present, &total, &percentage) == 5)
         {
             if (roll == searchRoll)
             {
-                printf("\n\n");
-                printf("\tSTUDENT ATTENDANCE\n");
-                printf("\n");
-
-                printf("\nStudent Name  : %s\n", name);
-                printf("Roll Number   : %d\n", roll);
-                printf("Present       : %d\n", presentCount);
-                printf("Total Classes : %d\n", totalClasses);
-                printf("Attendance    : %.2f%%\n", percentage);
-
-                printf("\n");
-
-                if (percentage < 60.0f)
-                {
-                    printf("\nAttendance is very low.\n");
-                    printf("Please contact your course teacher.\n");
-                }
-                else if (percentage < 70.0f)
-                {
-                    printf("\nPlease attend your classes regularly.\n");
-                }
-                else if (percentage < ATTENDANCE_THRESHOLD)
-                {
-                    printf("\nWarning: Attendance below %.0f%%!\n",
-                           ATTENDANCE_THRESHOLD);
-                }
-                else
-                {
-                    printf("\nAttendance status: Good standing.\n");
-                }
-
-                found = 1;
+                found = i;
                 break;
             }
         }
     }
 
-    fclose(fp);
-
-    if (!found)
+    if (found == -1)
     {
         printf("\nNo record found for roll %d.\n", searchRoll);
+        return;
     }
+
+    getTeacherComment(lines[found], comment, sizeof(comment));
+
+    printf("\nStudent Name  : %s\n", name);
+    printf("Roll Number   : %d\n", searchRoll);
+    printf("Present       : %d\n", present);
+    printf("Total Classes : %d\n", total);
+    printf("Attendance    : %.2f%%\n", percentage);
+    printf("Current Comment: %s\n",
+           comment[0] ? comment : "No comment yet.");
+
+    printf("\nEnter teacher comment: ");
+
+    if (fgets(comment, sizeof(comment), stdin) == NULL)
+    {
+        printf("Could not read the comment.\n");
+        return;
+    }
+
+    comment[strcspn(comment, "\r\n")] = '\0';
+
+    /*
+       Update the matching record in memory.
+       No separate comment file is created.
+    */
+    if (total > 0)
+    {
+        percentage = (float)present * 100.0f / total;
+    }
+    else
+    {
+        percentage = 0.0f;
+    }
+
+    snprintf(lines[found], sizeof(lines[found]),
+             "%s,%d,%d,%d,%.2f%%,%s\n",
+             name, roll, present, total, percentage, comment);
+
+    /*
+       Rewrite the existing course attendance file.
+    */
+    fp = fopen(filename, "w");
+
+    if (fp == NULL)
+    {
+        printf("\nError: Could not save the comment.\n");
+        return;
+    }
+
+    for (i = 0; i < count; i++)
+    {
+        fputs(lines[i], fp);
+    }
+
+    fclose(fp);
+
+    printf("\nTeacher comment saved successfully.\n");
 }
 
 
 //student's own record
+
+
 void studentRecord(int loggedInRoll)
 {
     FILE *courseFile;
@@ -261,27 +326,25 @@ void studentRecord(int loggedInRoll)
     char courseCode[50];
     char courseName[100];
     char filename[150];
-    char line[500];
+    char line[600];
 
     char studentName[100] = "Unknown";
     char name[100];
+    char comment[300];
 
     int roll;
     int present;
     int total;
     float percentage;
-
     int foundAny = 0;
 
-    // Find the student's name 
     studentFile = fopen("data/student-new.txt", "r");
 
     if (studentFile != NULL)
     {
         while (fgets(line, sizeof(line), studentFile) != NULL)
         {
-            if (sscanf(line, "%99[^,],%d",
-                       name, &roll) == 2)
+            if (sscanf(line, "%99[^,],%d", name, &roll) == 2)
             {
                 if (roll == loggedInRoll)
                 {
@@ -294,20 +357,16 @@ void studentRecord(int loggedInRoll)
         fclose(studentFile);
     }
 
-    printf("\n\tMY COURSEWISE ATTENDANCE\n");
-    printf("\n\n");
-
+    printf("\n\tMY COURSEWISE ATTENDANCE\n\n");
     printf("Student Name : %s\n", studentName);
     printf("Roll Number  : %d\n\n", loggedInRoll);
 
-    printf("%-12s %-35s %8s %7s %12s\n",
+    printf("%-12s %-30s %7s %7s %11s  %s\n",
            "Course Code", "Course Name",
-           "Present", "Total", "Attendance");
+           "Present", "Total", "Attendance", "Teacher Comment");
 
-    printf("\n\n");
+    printf("\n");
 
-    // Read the list of courses 
-    
     courseFile = fopen("data/courses.txt", "r");
 
     if (courseFile == NULL)
@@ -318,21 +377,17 @@ void studentRecord(int loggedInRoll)
 
     while (fgets(line, sizeof(line), courseFile) != NULL)
     {
-        // Expected format: course code,course name
         if (sscanf(line, "%49[^,],%99[^\r\n]",
                    courseCode, courseName) != 2)
         {
             continue;
         }
 
-        // Remove spaces before the course name
         while (courseName[0] == ' ')
         {
-            memmove(courseName, courseName + 1,
-                    strlen(courseName));
+            memmove(courseName, courseName + 1, strlen(courseName));
         }
 
-        // Build the attendance filename
         snprintf(filename, sizeof(filename),
                  "data/%s.txt", courseCode);
 
@@ -343,7 +398,6 @@ void studentRecord(int loggedInRoll)
             continue;
         }
 
-        // Search the course 
         while (fgets(line, sizeof(line), attendanceFile) != NULL)
         {
             if (sscanf(line, "%99[^,],%d,%d,%d,%f%%",
@@ -352,19 +406,21 @@ void studentRecord(int loggedInRoll)
             {
                 if (roll == loggedInRoll)
                 {
+                    getTeacherComment(line, comment, sizeof(comment));
+
                     if (total > 0)
                     {
-                        percentage =
-                            (float)present * 100.0f / total;
+                        percentage = (float)present * 100.0f / total;
                     }
                     else
                     {
                         percentage = 0.0f;
                     }
 
-                    printf("%-12s %-35.35s %8d %7d %11.2f%%\n",
+                    printf("%-12s %-30.30s %7d %7d %10.2f%%  %s\n",
                            courseCode, courseName,
-                           present, total, percentage);
+                           present, total, percentage,
+                           comment[0] ? comment : "No comment yet");
 
                     foundAny = 1;
                     break;
